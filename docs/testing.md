@@ -9,21 +9,21 @@
 |H5构建|uni-app Vue3 CLI|通过，输出 apps/web/dist/build/h5|
 |微信小程序构建|uni-app mp-weixin 编译|通过，输出 apps/web/dist/build/mp-weixin|
 |后端类型编译|TypeScript strict|通过|
-|接口、领域、数据库、国际化和MSW|Node test runner，隔离PGlite，MSW微信上游|24项通过|
+|接口、领域、数据库、国际化和MSW|Node test runner，本地PGlite与CI PostgreSQL 17，MSW微信上游|24项通过|
 |Mock页面与交互|Playwright + Edge + MSW HTTP服务|9项通过|
 |真实前后端闭环|Playwright + Fastify + 文件PGlite|1项通过|
 |Word文档|CI LibreOffice渲染，四页PNG逐页检查|通过，中文显示、分页、表格列宽及页码正常|
 |设计图|drawio XML结构检查及SVG渲染|3张图完整；修正E-R横向关系标签位置|
 |原型|7页drawio可编辑形状与页面链接，离线HTML交互文件|源文件已生成并纳入版本管理|
 
-本地环境为 Windows、Node.js v24.20.0；CI 使用 Ubuntu、Node.js 22、Chromium。先前提交 `1e2138d` 的构建、22项接口测试、7项页面测试与文档渲染已在GitHub Actions通过；新增的2项接口测试、2项页面测试和真实联调将在最终提交的同一工作流中再次验证。最新运行状态见仓库 Actions。
+本地环境为 Windows、Node.js v24.20.0；CI 使用 Ubuntu、Node.js 22、Chromium和隔离PostgreSQL 17容器。代码提交 `67684051b5141f747b7ee86700e5a62fc721fb77` 的双端构建、24项接口及领域测试、9项Mock页面测试、1项真实联调和文档渲染均已通过。[最终验证运行记录](https://github.com/imxiaomin/fitstreak/actions/runs/35567319559)。本报告的后续提交仅更新验证记录，不修改已验证代码。
 
 ## 覆盖范围
 
 - 认证：无令牌返回401、演示开关、微信code2Session上游成功及失败的MSW模拟、重复微信身份返回同一用户、上游session_key不返回客户端。
 - 计划：创建、修改、归档、名称空白、非法日期、分钟范围、训练日去重、用户ID注入、跨用户修改与打卡拒绝。
 - 打卡及统计：当天记录、禁止客户端日期、重复409、同日多计划计两次但仅一个运动日、零填充、历史快照、归档后历史统计不变、时区午夜和闰日、连续打卡计算。
-- 数据库：分钟CHECK约束和跨用户复合外键约束。测试使用PGlite中的真实SQL执行，不使用数组代替数据库测试。
+- 数据库：分钟CHECK约束和跨用户复合外键约束。本地测试使用PGlite执行SQL；CI通过TEST_DATABASE_URL将接口集成测试连接到真实PostgreSQL 17，两个适配器均已验证。
 - 页面：375、768、1440像素宽度；中英首页及主要英文功能页无横向溢出；表单在视口内；创建、编辑、打卡、归档、统计、文章详情翻译、个人信息保存、空态、无效输入保留、500重试、401回到登录、访客知识浏览。
 - 真实联调：浏览器创建“真实接口联调”计划，打卡37分钟，刷新后仍为已完成，统计与历史均显示37分钟。
 
