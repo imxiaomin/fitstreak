@@ -5,4 +5,16 @@ test('Real API and persistent database support the complete browser workflow',as
  const row=page.locator('.session-row').filter({hasText:'真实接口联调'});await expect(row).toBeVisible();await row.getByRole('button',{name:'去打卡'}).click();await page.locator('.dialog input').first().fill('37');await page.getByRole('button',{name:'完成打卡',exact:true}).click();await expect(row.getByRole('button',{name:'已完成'})).toBeDisabled();
  await page.reload();await expect(page.locator('.session-row').filter({hasText:'真实接口联调'}).getByRole('button',{name:'已完成'})).toBeDisabled();
  await page.locator('.sidebar').getByRole('button',{name:'运动数据',exact:true}).click();await expect(page.locator('.history').getByText('37 分钟')).toBeVisible();await expect(page.locator('.metric-value').first()).toHaveText('37');await page.screenshot({path:'docs/screenshots/live-stats-desktop.png',fullPage:true});
+ await page.locator('.sidebar').getByRole('button',{name:'个人中心',exact:true}).click();
+ await page.locator('.preferences .field').filter({hasText:'昵称'}).locator('input').fill('偏好保存验证');
+ await page.locator('.preferences .field').filter({hasText:'每周目标（天）'}).locator('input').fill('6');
+ const saved=page.waitForResponse(r=>r.url().endsWith('/api/me')&&r.request().method()==='PATCH');
+ await page.getByRole('button',{name:'保存',exact:true}).click();
+ expect((await saved).status()).toBe(200);
+ await expect(page.locator('.profile-card .card-title')).toHaveText('偏好保存验证');
+ await expect(page.locator('.error-banner')).toHaveCount(0);
+ await page.reload();
+ await page.locator('.sidebar').getByRole('button',{name:'个人中心',exact:true}).click();
+ await expect(page.locator('.preferences .field').filter({hasText:'昵称'}).locator('input')).toHaveValue('偏好保存验证');
+ await expect(page.locator('.preferences .field').filter({hasText:'每周目标（天）'}).locator('input')).toHaveValue('6');
 });

@@ -22,7 +22,7 @@ export async function buildApp(o:AppOptions) {
  if(o.secret.length<32) throw new Error('JWT_SECRET must contain at least 32 characters');
  const db=o.db??await database({url:process.env.DATABASE_URL,path:process.env.PGLITE_PATH??'../../.data/fitstreak'});
  const app=Fastify({logger:o.logger??false,ajv:{customOptions:{removeAdditional:false,coerceTypes:false}}});
- await app.register(cors,{origin:o.corsOrigin??'http://127.0.0.1:5173'});
+ await app.register(cors,{origin:o.corsOrigin??'http://127.0.0.1:5173',methods:['GET','HEAD','POST','PATCH','DELETE','OPTIONS']});
  await app.register(jwt,{secret:o.secret,sign:{expiresIn:'7d'}});
  await app.register(rateLimit,{max:120,timeWindow:'1 minute'});
  await app.register(swagger,{openapi:{info:{title:'FitStreak API',version:'1.0.0',description:'All business dates use Asia/Shanghai. Demo login is disabled in production.'},components:{securitySchemes:{bearerAuth:{type:'http',scheme:'bearer',bearerFormat:'JWT'}}}}});

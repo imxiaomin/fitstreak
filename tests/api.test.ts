@@ -9,6 +9,15 @@ const payload={title:'Morning run',activity:'run',target_minutes:30,weekdays:[1,
 const req=(method:any,url:string,payload?:any,auth=token)=>app.inject({method,url,payload,headers:auth?{authorization:`Bearer ${auth}`}:{}});
 before(async()=>{db=await database({url:process.env.TEST_DATABASE_URL});app=await buildApp({db,secret:'test-only-secret-at-least-thirty-two-chars',demo:true,now:()=>new Date('2026-09-21T08:00:00Z')});const a=await req('POST','/api/auth/demo',{},'');token=a.json().data.token;uid=a.json().data.user.id;other=(await req('POST','/api/auth/demo',{},'')).json().data.token;});
 after(async()=>{await app?.close();});
+test('Browser CORS preflight permits profile edits, plan edits and archive',async()=>{
+ for(const [method,url] of [['PATCH','/api/me'],['PATCH','/api/plans/'+randomUUID()],['DELETE','/api/plans/'+randomUUID()]]){
+  const r=await app.inject({method:'OPTIONS',url,headers:{origin:'http://127.0.0.1:5173','access-control-request-method':method,'access-control-request-headers':'authorization,content-type'}});
+  assert.equal(r.statusCode,204);
+  assert.equal(r.headers['access-control-allow-origin'],'http://127.0.0.1:5173');
+  assert.ok(String(r.headers['access-control-allow-methods']).split(/,\s*/).includes(method));
+  assert.match(String(r.headers['access-control-allow-headers']),/authorization/);
+ }
+});
 test('FR-01 unauthorized requests rejected',async()=>assert.equal((await req('GET','/api/me',undefined,'')).statusCode,401));
 test('FR-02 create valid plan and persist',async()=>{const r=await req('POST','/api/plans',payload);assert.equal(r.statusCode,201,r.body);pid=r.json().data.id;assert.equal(r.json().data.title,payload.title);});
 test('NFR-03 ownership cannot be injected',async()=>assert.equal((await req('POST','/api/plans',{...payload,user_id:randomUUID()})).statusCode,400));
