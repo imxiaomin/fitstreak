@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#72877c"/></marker></defs><rect width="100%" height="100%" fill="#f6f7f3"/><text x="40" y="42" font-family="Microsoft YaHei,Arial" font-size="24" fill="#173d31">FitStreak 技术选型</text>
+<path d="M560.0 167 L190.0 245" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<path d="M560.0 167 L560.0 245" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<path d="M760 126.0 L790 290.0" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<path d="M190.0 335 L190.0 420" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="195.0" y="372.5" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">跨端适配</text>
+<path d="M560.0 335 L560.0 420" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="565.0" y="372.5" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">单人维护成本</text>
+<path d="M930.0 335 L930.0 420" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="935.0" y="372.5" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">一致性与可测试性</text>
+<path d="M190.0 510 L560.0 590" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<path d="M560.0 510 L560.0 590" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<path d="M930.0 510 L560.0 590" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<rect x="360" y="85" width="400" height="82" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="560.0" y="112" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">项目约束</text>
+<text x="560.0" y="135" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">小程序 + H5 · 双语 · 独立后端</text>
+<rect x="50" y="245" width="280" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="190.0" y="272" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">前端候选</text>
+<text x="190.0" y="295" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">微信原生 / Taro / uni-app</text>
+<rect x="420" y="245" width="280" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="560.0" y="272" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">后端候选</text>
+<text x="560.0" y="295" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">Spring Boot / NestJS / Fastify</text>
+<rect x="790" y="245" width="280" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="930.0" y="272" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">数据与测试候选</text>
+<text x="930.0" y="295" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">MySQL / PostgreSQL · MSW</text>
+<rect x="50" y="420" width="280" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="190.0" y="447" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">采用 uni-app + Vue 3 + TS</text>
+<text x="190.0" y="470" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">复用跨端组件和业务逻辑</text>
+<rect x="420" y="420" width="280" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="560.0" y="447" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">采用 Fastify + TypeScript</text>
+<text x="560.0" y="470" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">契约校验与模块化单体</text>
+<rect x="790" y="420" width="280" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="930.0" y="447" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">采用 PostgreSQL + MSW</text>
+<text x="930.0" y="470" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">关系约束 / 可复现异常场景</text>
+<rect x="210" y="590" width="700" height="75" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="560.0" y="617" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">工程交付</text>
+<text x="560.0" y="640" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">OpenAPI · drawio · SQL · Word · Playwright · GitHub</text>
+</svg>

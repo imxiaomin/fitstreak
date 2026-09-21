@@ -1,0 +1,9 @@
+flowchart TB
+ C[微信小程序 / 响应式 H5] --> U[uni-app + Vue 3 + TypeScript]
+ U -->|HTTPS JSON| A[Fastify REST API · JWT · 参数校验]
+ A --> W[微信 code2Session]
+ A --> S[计划 / 打卡 / 统计 / 知识 / 用户]
+ S --> P[(PostgreSQL 17)]
+ S -.开发测试.-> L[(PGlite)]
+ M[MSW HTTP Mock] -.替代 API.-> U
+ T[Playwright + API集成测试] --> A

@@ -1,0 +1,10 @@
+flowchart TB
+ R[小程序 + H5 / 双语 / 关系数据 / 单人维护] --> F[原生 / Taro / uni-app]
+ R --> B[Spring Boot / NestJS / Fastify]
+ R --> D[MySQL / PostgreSQL]
+ F --> UF[uni-app + Vue 3 + TypeScript]
+ B --> UB[Fastify 模块化单体]
+ D --> UD[PostgreSQL + PGlite开发测试]
+ UF --> Q[MSW + Playwright + OpenAPI + GitHub CI]
+ UB --> Q
+ UD --> Q

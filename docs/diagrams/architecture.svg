@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#72877c"/></marker></defs><rect width="100%" height="100%" fill="#f6f7f3"/><text x="40" y="42" font-family="Microsoft YaHei,Arial" font-size="24" fill="#173d31">FitStreak 系统架构</text>
+<path d="M320 133.0 L420 133.0" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="375.0" y="128.0" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">共用界面</text>
+<path d="M565.0 176 L565.0 250" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="570.0" y="208.0" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">HTTPS JSON</text>
+<path d="M710 295.0 L820 133.0" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="770.0" y="209.0" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">仅服务端密钥</text>
+<path d="M565.0 340 L565.0 410" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="570.0" y="370.0" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">已验证身份</text>
+<path d="M565.0 500 L565.0 575" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="570.0" y="532.5" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">参数化 SQL</text>
+<path d="M320 295.0 L420 133.0" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="375.0" y="209.0" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">开发环境</text>
+<path d="M320 455.0 L420 455.0" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="375.0" y="450.0" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">集成测试</text>
+<path d="M710 455.0 L820 620.0" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>
+<text x="770.0" y="532.5" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">开发配置</text>
+<rect x="50" y="90" width="270" height="86" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="185.0" y="117" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">微信小程序 / 响应式 H5</text>
+<text x="185.0" y="140" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">手机 · 平板 · 桌面</text>
+<rect x="420" y="90" width="290" height="86" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="565.0" y="117" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">uni-app + Vue 3</text>
+<text x="565.0" y="140" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">页面组件 · 双语字典 · 请求封装</text>
+<rect x="820" y="90" width="240" height="86" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="940.0" y="117" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">微信服务</text>
+<text x="940.0" y="140" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">code2Session</text>
+<rect x="420" y="250" width="290" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="565.0" y="277" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">Fastify REST API</text>
+<text x="565.0" y="300" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">JWT · JSON Schema · 请求限流</text>
+<rect x="420" y="410" width="290" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="565.0" y="437" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">领域服务</text>
+<text x="565.0" y="460" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">计划 · 打卡 · 统计 · 知识 · 用户</text>
+<rect x="420" y="575" width="290" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="565.0" y="602" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">PostgreSQL 17</text>
+<text x="565.0" y="625" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">事务 · 外键 · 唯一约束 · 索引</text>
+<rect x="50" y="250" width="270" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="185.0" y="277" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">MSW Mock 服务</text>
+<text x="185.0" y="300" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">正常 / 空态 / 延迟 / 错误</text>
+<rect x="50" y="410" width="270" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="185.0" y="437" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">测试与交付</text>
+<text x="185.0" y="460" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">API集成 · Playwright · GitHub CI</text>
+<rect x="820" y="575" width="240" height="90" rx="12" fill="#fff" stroke="#cbd9ce"/>
+<text x="940.0" y="602" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="15" fill="#173d31">本地开发与测试</text>
+<text x="940.0" y="625" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="12" fill="#173d31">PGlite 隔离数据库</text>
+</svg>

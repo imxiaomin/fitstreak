@@ -1,0 +1,40 @@
+erDiagram
+ app_user ||--o{ fitness_plan : owns
+ app_user ||--o{ checkin : records
+ fitness_plan ||--o{ checkin : generates
+ article ||--o{ article_translation : translates
+ app_user { uuid id PK
+ varchar open_id UK
+ varchar nickname
+ varchar locale
+ varchar timezone
+ smallint weekly_goal
+ timestamptz created_at }
+ fitness_plan { uuid id PK
+ uuid user_id FK
+ varchar title
+ varchar activity
+ smallint target_minutes
+ smallint_array weekdays
+ date start_date
+ date end_date
+ timestamptz archived_at
+ timestamptz created_at }
+ checkin { uuid id PK
+ uuid user_id FK
+ uuid plan_id FK
+ date local_date
+ smallint duration_minutes
+ varchar note
+ varchar plan_title
+ varchar activity
+ timestamptz created_at }
+ article { uuid id PK
+ varchar category
+ smallint reading_minutes
+ timestamptz published_at }
+ article_translation { uuid article_id PK,FK
+ varchar locale PK
+ varchar title
+ varchar summary
+ text body }
