@@ -4,6 +4,8 @@
   "workspaces": ["apps/*"],
   "scripts": {
     "dev": "npm run dev -w @fitstreak/web",
+    "db:status": "tsx scripts/database-status.mts",
+    "db:migrate:pglite": "tsx scripts/migrate-pglite.mts",
     "dev:api": "npm run dev -w @fitstreak/api",
     "dev:mock": "tsx mocks/server.ts",
     "dev:web:mock": "npm run dev -w @fitstreak/web -- --mode mock",

@@ -31,6 +31,8 @@ npm run dev
 
 打开 http://127.0.0.1:5173 ，点击开始使用生成独立演示账号。API文档在 http://127.0.0.1:3000/docs 。默认开发 JWT 密钥为进程随机值，重启后须重新登录；需要稳定本地会话时复制 `apps/api/.env.example` 为 `.env` 并设置自己的随机密钥。
 
+独立 PostgreSQL 的本机连接、pgAdmin/Navicat 查看表、数据迁移与测试隔离，见 [Windows 本地 PostgreSQL](docs/postgresql-local.md)。配置 `apps/api/.env` 的 `DATABASE_URL` 后，后端使用 PostgreSQL；运行 `npm run db:status` 可确认连接与记录数量。
+
 ## 使用 MSW 开发预览
 
 两个终端分别运行：
