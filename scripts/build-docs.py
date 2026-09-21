@@ -76,7 +76,12 @@ def graph(name,title,nodes,edges,width=1120,height=700):
         cell=ET.SubElement(root,'mxCell',id='e'+str(idx),value=label,edge='1',parent='1',source=src,target=target,style='edgeStyle=orthogonalEdgeStyle;rounded=1;endArrow=block;strokeColor=#72877c;fontSize=12;labelBackgroundColor=#f6f7f3;')
         ET.SubElement(cell,'mxGeometry',relative='1',attrib={'as':'geometry'})
         svg.append(f'<path d="M{sx} {sy} L{tx} {ty}" stroke="#72877c" stroke-width="1.7" fill="none" marker-end="url(#arrow)"/>')
-        if label:svg.append(f'<text x="{(sx+tx)/2+5}" y="{(sy+ty)/2-5}" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">{html.escape(label)}</text>')
+        if label:
+            if abs(sy-ty)<1:
+                parts=label.rsplit(' ',1) if '0..N' in label else [label]
+                for k,part in enumerate(parts):
+                    svg.append(f'<text x="{(sx+tx)/2}" y="{sy-12+k*26}" text-anchor="middle" font-family="Microsoft YaHei,Arial" font-size="10" fill="#5a7265">{html.escape(part)}</text>')
+            else:svg.append(f'<text x="{(sx+tx)/2+5}" y="{(sy+ty)/2-5}" font-family="Microsoft YaHei,Arial" font-size="11" fill="#5a7265">{html.escape(label)}</text>')
     for id,label,x,y,w,h in nodes:
         cell=ET.SubElement(root,'mxCell',id=id,value=label,vertex='1',parent='1',style='rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#cbd9ce;fontColor=#173d31;fontFamily=Microsoft YaHei;fontSize=14;spacing=12;')
         ET.SubElement(cell,'mxGeometry',x=str(x),y=str(y),width=str(w),height=str(h),attrib={'as':'geometry'})

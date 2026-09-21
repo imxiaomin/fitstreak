@@ -10,6 +10,7 @@
     "build": "npm run build -w @fitstreak/web && npm run build:mp -w @fitstreak/web && npm run build -w @fitstreak/api",
     "test": "tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
+    "test:live": "playwright test -c playwright.live.config.ts",
     "api:export": "tsx scripts/export-api.ts"
   },
   "devDependencies": {"tsx":"^4.20.0", "typescript":"~5.8.3", "@types/node":"^22.15.0", "@playwright/test":"^1.51.0", "msw":"^2.7.0"},

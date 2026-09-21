@@ -1,0 +1,36 @@
+
+> fitstreak@1.0.0 test
+> tsx --test tests/*.test.ts
+
+✔ FR-01 unauthorized requests rejected (4057.4674ms)
+✔ FR-02 create valid plan and persist (47.7225ms)
+✔ NFR-03 ownership cannot be injected (3.8643ms)
+✔ FR-02 rejects zero duration, invalid dates and duplicate weekdays (18.0761ms)
+✔ NFR-03 cross-user modification and checkin hidden (39.9394ms)
+✔ FR-04 records current business day, rejects client date (31.4568ms)
+✔ FR-05 concurrent duplicate checkins return conflict (36.6393ms)
+✔ FR-07 same-day different plans count one active day (38.4835ms)
+✔ FR-03 history snapshot survives rename and archive (82.6406ms)
+✔ FR-04 rejects unscheduled or archived plans (40.7538ms)
+✔ FR-09 profile validation and persistence (20.2944ms)
+✔ FR-08 bilingual article categories, paragraph breaks and missing article (28.2518ms)
+✔ FR-06 invalid and excessive history ranges rejected (11.8586ms)
+✔ NFR-02 SQL rejects cross-owner foreign key and invalid duration (4.745ms)
+✔ NFR-02 SQL prevents a checkin owner from differing from its plan owner (11.5319ms)
+✔ BR-08 Shanghai midnight and leap day (1.1624ms)
+✔ BR-04 streak bridges today or yesterday and ignores duplicates (0.5947ms)
+✔ FR-01 demo login disabled in production configuration (1449.1864ms)
+✔ FR-12 Chinese and English dictionaries contain the same nonempty keys (401.7479ms)
+✔ MSW normal contract has 7 zero-filled dates (68.378ms)
+✔ MSW empty scenario returns no plans (7.958ms)
+✔ MSW error and unauthorized scenarios (33.0618ms)
+✔ WeChat code exchange is server-side and stable for returning users (4145.512ms)
+✔ WeChat invalid code does not create a session (1537.0423ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7785.1756

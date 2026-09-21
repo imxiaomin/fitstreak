@@ -51,6 +51,7 @@
 - Fastify：https://fastify.dev/docs/latest/
 - PostgreSQL 约束：https://www.postgresql.org/docs/current/ddl-constraints.html
 - MSW Node：https://mswjs.io/docs/integrations/node/
+- PGlite：https://pglite.dev/docs/
 - diagrams.net 界面原型：https://www.drawio.com/docs/tutorials/mockups-in-jira/
 
 文档描述的是设计决策。构建与测试是否通过以 `docs/testing.md` 的实测记录为准；微信真机、正式 AppID 和线上服务的验收单独记录。

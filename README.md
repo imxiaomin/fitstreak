@@ -2,6 +2,8 @@
 
 面向日常健身记录的微信小程序及响应式网页。支持计划创建与归档、每日打卡、数据统计、知识阅读、个人设置和简体中文／英文。所有代码、设计源文件及需求文档统一版本管理。
 
+![FitStreak 桌面首页](docs/screenshots/home-1440-zh.png)
+
 ## 交付物导航
 
 |内容|路径|
@@ -46,6 +48,7 @@ Mock 端口为3001，前端为5173。Mock 只用于开发和测试，数据在�
 npm run build
 npm test
 npm run test:e2e
+npm run test:live
 npm run api:export
 ```
 
@@ -65,3 +68,5 @@ Windows 浏览器测试默认使用已安装的 Edge，Linux CI 使用 Playwrigh
 `scripts/build-docs.py` 从需求文本生成Word，从结构数据生成三张图和多页drawio原型。需要 Python 的 python-docx；运行 `python scripts/build-docs.py`。使用 diagrams.net 打开 `.drawio` 源文件，原型 `design/prototype.html` 可直接离线打开。修改生成文件时同步修改生成源，避免下次生成覆盖。
 
 文档在CI使用 `scripts/render_docx.py` 转页图，人工检查分页和中文字体。软件交付与微信正式上线验收的状态以测试报告为准。
+
+全部交付项及待实际环境验收项见 [交付清单](docs/delivery-checklist.md)。

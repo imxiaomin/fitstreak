@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-09-21T06:08:36.788Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.20.0"
+  },
+  "stats": {
+    "startTime": "2026-09-21T06:03:13.599Z",
+    "duration": 21801.131,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "Real API and persistent database support the complete browser workflow",
+      "file": "app.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3784,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

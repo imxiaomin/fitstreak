@@ -1,6 +1,7 @@
 import { PGlite } from '@electric-sql/pglite';
 import pg from 'pg';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdir } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 export interface Database {
  query(sql: string, params?: any[]): Promise<{ rows: Record<string, any>[] }>;
@@ -12,7 +13,10 @@ export async function database(options: {url?: string; path?: string} = {}): Pro
  if (options.url) {
    const pool = new pg.Pool({connectionString: options.url});
    db = {query: (sql, params) => pool.query(sql, params), exec: sql => pool.query(sql), close: () => pool.end()};
- } else { db = new PGlite(options.path); }
+ } else {
+   if(options.path)await mkdir(dirname(options.path),{recursive:true});
+   db = new PGlite(options.path);
+ }
  for (const file of ['001_schema.sql','002_seed.sql']) {
    await db.exec(await readFile(fileURLToPath(new URL(`../../../database/${file}`, import.meta.url)), 'utf8'));
  }
