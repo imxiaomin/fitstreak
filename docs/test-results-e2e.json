@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-21T06:08:36.785Z",
+  "generatedAt": "2026-09-21T16:01:58.231Z",
   "environment": {
     "platform": "win32",
     "node": "v24.20.0"
   },
   "stats": {
-    "startTime": "2026-09-21T06:03:36.770Z",
-    "duration": 29379.934,
-    "expected": 9,
+    "startTime": "2026-09-21T16:00:40.900Z",
+    "duration": 36774.344000000005,
+    "expected": 14,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
@@ -20,7 +20,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 4392,
+          "durationMs": 3750,
           "errors": []
         }
       ]
@@ -32,7 +32,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 2301,
+          "durationMs": 2797,
           "errors": []
         }
       ]
@@ -44,7 +44,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 2555,
+          "durationMs": 3006,
           "errors": []
         }
       ]
@@ -56,7 +56,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 3400,
+          "durationMs": 2648,
           "errors": []
         }
       ]
@@ -68,7 +68,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 2110,
+          "durationMs": 1906,
           "errors": []
         }
       ]
@@ -80,7 +80,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1681,
+          "durationMs": 1535,
           "errors": []
         }
       ]
@@ -92,7 +92,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1373,
+          "durationMs": 1218,
           "errors": []
         }
       ]
@@ -104,7 +104,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1458,
+          "durationMs": 1230,
           "errors": []
         }
       ]
@@ -116,7 +116,67 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1127,
+          "durationMs": 937,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Movement library: 375px, frames, filters and English",
+      "file": "movements.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1911,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Movement library: 768px, frames, filters and English",
+      "file": "movements.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1868,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Movement library: 1440px, frames, filters and English",
+      "file": "movements.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2068,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Category preview changes in plan form; all three frames are served locally",
+      "file": "movements.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1556,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Missing exercise image has a readable fallback",
+      "file": "movements.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1253,
           "errors": []
         }
       ]

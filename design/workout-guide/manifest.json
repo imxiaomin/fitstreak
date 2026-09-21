@@ -1,0 +1,620 @@
+{
+  "repository": "https://github.com/bryllim/workout-guide",
+  "commit": "aac599224bb9780305239607ef98540b7e0ce389",
+  "changes": "PNG and SVG files copied without modification; Chinese display labels added separately in application code.",
+  "exercises": [
+    {
+      "id": "exercise-running",
+      "slug": "running",
+      "name": "Running",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/running/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/running/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/running/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-walking",
+      "slug": "walking",
+      "name": "Walking",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/walking/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/walking/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/walking/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-cycling",
+      "slug": "cycling",
+      "name": "Cycling",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/cycling/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/cycling/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/cycling/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-push-up",
+      "slug": "push-up",
+      "name": "Push-up",
+      "exerciseType": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Chest",
+      "secondaryMuscles": [
+        "Triceps",
+        "Core"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/push-up/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "source": {
+              "name": "Everkinetic",
+              "url": "https://github.com/everkinetic/data/blob/main/dist/svg/0077-tension.svg",
+              "license": "CC BY-SA 4.0",
+              "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced."
+            }
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/push-up/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/push-up/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "source": {
+          "name": "Everkinetic",
+          "url": "https://github.com/everkinetic/data/blob/main/dist/svg/0077-tension.svg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced."
+        }
+      }
+    },
+    {
+      "id": "exercise-bodyweight-squat",
+      "slug": "bodyweight-squat",
+      "name": "Bodyweight Squat",
+      "exerciseType": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Quads",
+      "secondaryMuscles": [
+        "Glutes",
+        "Hamstrings",
+        "Core"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/bodyweight-squat/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/bodyweight-squat/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/bodyweight-squat/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-plank",
+      "slug": "plank",
+      "name": "Plank",
+      "exerciseType": "duration",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Core",
+      "secondaryMuscles": [
+        "Shoulders"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/plank/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/plank/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/plank/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-forward-lunge",
+      "slug": "forward-lunge",
+      "name": "Forward Lunge",
+      "exerciseType": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Quads",
+      "secondaryMuscles": [
+        "Glutes",
+        "Hamstrings",
+        "Core"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/forward-lunge/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/forward-lunge/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/forward-lunge/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-cat-cow-stretch",
+      "slug": "cat-cow-stretch",
+      "name": "Cat-Cow Stretch",
+      "exerciseType": "duration",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Mobility",
+      "secondaryMuscles": [
+        "Back",
+        "Core"
+      ],
+      "isStretch": true,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/cat-cow-stretch/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/cat-cow-stretch/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/cat-cow-stretch/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-childs-pose",
+      "slug": "childs-pose",
+      "name": "Child's Pose",
+      "exerciseType": "duration",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Back",
+      "secondaryMuscles": [
+        "Shoulders",
+        "Hips",
+        "Mobility"
+      ],
+      "isStretch": true,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/childs-pose/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/childs-pose/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/childs-pose/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-cross-body-shoulder-stretch",
+      "slug": "cross-body-shoulder-stretch",
+      "name": "Cross-Body Shoulder Stretch",
+      "exerciseType": "duration",
+      "equipment": "Bodyweight",
+      "primaryMuscle": "Shoulders",
+      "secondaryMuscles": [
+        "Upper Back",
+        "Mobility"
+      ],
+      "isStretch": true,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/cross-body-shoulder-stretch/frame-1.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/cross-body-shoulder-stretch/frame-2.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/cross-body-shoulder-stretch/frame-3.svg",
+          "width": 512,
+          "height": 512,
+          "format": "svg",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    }
+  ]
+}

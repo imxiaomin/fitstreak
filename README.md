@@ -19,6 +19,8 @@
 |OpenAPI 合同|[openapi.json](docs/api/openapi.json)|
 |Mock / 自动化测试|[mocks](mocks) / [tests](tests)|
 |测试状态及验收限制|[testing.md](docs/testing.md)|
+|图标与动作图升级、源文件、验证|[visual-upgrade.md](docs/visual-upgrade.md)|
+|动作素材授权与作者署名|[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)|
 
 ## 本地启动
 
