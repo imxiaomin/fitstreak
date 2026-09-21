@@ -7,6 +7,7 @@ import swaggerUi from '@fastify/swagger-ui';
 import {randomUUID} from 'node:crypto';
 import {database, type Database} from './db.js';
 import {localDate, shiftDay, streak, isScheduled} from './domain.js';
+import {responseFor} from './contracts.js';
 
 declare module '@fastify/jwt' { interface FastifyJWT {payload:{sub:string}; user:{sub:string};} }
 export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean};
@@ -26,6 +27,7 @@ export async function buildApp(o:AppOptions) {
  await app.register(rateLimit,{max:120,timeWindow:'1 minute'});
  await app.register(swagger,{openapi:{info:{title:'FitStreak API',version:'1.0.0',description:'All business dates use Asia/Shanghai. Demo login is disabled in production.'},components:{securitySchemes:{bearerAuth:{type:'http',scheme:'bearer',bearerFormat:'JWT'}}}}});
  await app.register(swaggerUi,{routePrefix:'/docs'});
+ app.addHook('onRoute',route=>{const response=responseFor(route.url,String(route.method));if(response)route.schema={...route.schema,response};});
  const now=()=>o.now?.()??new Date();
  const today=()=>localDate(now());
  app.setErrorHandler((e,req,reply)=>{
@@ -97,7 +99,7 @@ export async function buildApp(o:AppOptions) {
  app.get('/api/checkins',{preHandler:auth,schema:{...secure,tags:['Checkins'],querystring:object({from:date,to:date})}},async req=>{
    const q=req.query as any, from=q.from??shiftDay(today(),-29), to=q.to??today();if(from>to) fail('INVALID_DATE_RANGE');
    if(new Date(to).getTime()-new Date(from).getTime()>366*86400000) fail('RANGE_TOO_LARGE');
-   return result((await db.query('SELECT *,local_date::text FROM checkin WHERE user_id=$1 AND local_date BETWEEN $2::date AND $3::date ORDER BY local_date DESC,created_at DESC',[req.user.sub,from,to])).rows);
+   return result((await db.query('SELECT *,local_date::text FROM checkin WHERE user_id=$1 AND local_date BETWEEN $2::date AND $3::date ORDER BY checkin.local_date DESC,created_at DESC',[req.user.sub,from,to])).rows);
  });
  app.get('/api/stats',{preHandler:auth,schema:{...secure,tags:['Statistics'],querystring:object({days:{type:'string',enum:['7','30']}})}},async req=>{
    const days=Number((req.query as any).days??7), day=today(), start=shiftDay(day,1-days);

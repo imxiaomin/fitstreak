@@ -18,6 +18,8 @@ def word():
         s.font.size=Pt(10.5 if name=='Normal' else 15 if name.startswith('Heading') else 23)
         s.paragraph_format.space_after=Pt(7);s.paragraph_format.line_spacing=1.25
     doc.styles['Title'].paragraph_format.space_after=Pt(14)
+    for border in list(doc.styles.element.iter(qn('w:pBdr'))):
+        border.getparent().remove(border)
     footer=sec.footer.paragraphs[0];footer.alignment=2
     run=footer.add_run('FitStreak  |  ');run.font.size=Pt(8)
     field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');footer._p.append(field)
@@ -33,6 +35,7 @@ def word():
                 i+=1
             table=doc.add_table(rows=1,cols=len(rows[0]));table.autofit=False
             widths=[2.1,2.0,12.5] if len(rows[0])==3 else [16.6/len(rows[0])]*len(rows[0])
+            for j,width in enumerate(widths):table.columns[j].width=Cm(width)
             for n,row in enumerate(rows):
                 cells=table.rows[0].cells if n==0 else table.add_row().cells
                 for j,text in enumerate(row):
