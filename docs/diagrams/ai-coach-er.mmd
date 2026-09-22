@@ -1,0 +1,40 @@
+erDiagram
+  app_user ||--o| health_profile : owns
+  app_user ||--o{ agent_run : requests
+  app_user ||--o{ fitness_plan : owns
+  agent_run o|--o{ fitness_plan : creates
+  fitness_plan ||--o{ plan_exercise : contains
+  fitness_plan ||--o{ checkin : records
+  health_profile {
+    uuid user_id PK,FK
+    jsonb data
+    uuid version
+    boolean ai_consent
+    timestamptz updated_at
+  }
+  agent_run {
+    uuid id PK
+    uuid user_id FK
+    uuid request_key "unique with user_id"
+    uuid health_version
+    varchar status
+    varchar message
+    jsonb proposal
+    jsonb tool_log
+    integer total_tokens
+    uuid_array created_plan_ids
+  }
+  fitness_plan {
+    uuid id PK
+    uuid user_id FK
+    uuid agent_run_id FK "nullable; ON DELETE SET NULL"
+  }
+  plan_exercise {
+    uuid plan_id PK,FK
+    smallint position PK
+    varchar exercise_slug
+    smallint sets
+    smallint reps "nullable; mutually exclusive with duration"
+    integer duration_seconds "nullable"
+    smallint rest_seconds
+  }

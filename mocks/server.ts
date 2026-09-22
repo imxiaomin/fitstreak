@@ -10,5 +10,6 @@ const server=createServer(async(req,res)=>{
  if(url.pathname==='/health'){res.end('ok');return;}
  try{const chunks:Buffer[]=[];for await(const chunk of req)chunks.push(chunk);const body=Buffer.concat(chunks);const r=await fetch('http://mock.fitstreak.test'+req.url,{method:req.method,headers:{'Content-Type':'application/json',Authorization:req.headers.authorization??''},...(['POST','PATCH'].includes(req.method??'')?{body:body.toString()||'{}'}:{})});res.writeHead(r.status,{'Content-Type':'application/json'});res.end(await r.text());}catch{res.writeHead(500);res.end(JSON.stringify({error:{code:'INTERNAL_ERROR'}}));}
 });
-server.listen(3001,'127.0.0.1',()=>console.log('MSW mock API http://127.0.0.1:3001'));
+const port=Number(process.env.PORT??3001);
+server.listen(port,'127.0.0.1',()=>console.log('MSW mock API http://127.0.0.1:'+port));
 process.on('SIGTERM',()=>server.close(()=>{interceptor.close();process.exit(0);}));

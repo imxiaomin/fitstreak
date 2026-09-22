@@ -8,9 +8,12 @@ import {randomUUID} from 'node:crypto';
 import {database, type Database} from './db.js';
 import {localDate, shiftDay, streak, isScheduled} from './domain.js';
 import {responseFor} from './contracts.js';
+import {registerAgent} from './agent/routes.js';
+import {AgentError} from './agent/schema.js';
+import type {AgentConfig} from './agent/provider.js';
 
 declare module '@fastify/jwt' { interface FastifyJWT {payload:{sub:string}; user:{sub:string};} }
-export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean};
+export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean; agent?:AgentConfig};
 const uuid={type:'string',format:'uuid'};
 const date={type:'string',format:'date'};
 const object=(properties:Record<string,any>, required:string[]=[])=>({type:'object',additionalProperties:false,properties,required});
@@ -22,7 +25,7 @@ export async function buildApp(o:AppOptions) {
  if(o.secret.length<32) throw new Error('JWT_SECRET must contain at least 32 characters');
  const db=o.db??await database({url:process.env.DATABASE_URL,path:process.env.PGLITE_PATH??'../../.data/fitstreak'});
  const app=Fastify({logger:o.logger??false,ajv:{customOptions:{removeAdditional:false,coerceTypes:false}}});
- await app.register(cors,{origin:o.corsOrigin??'http://127.0.0.1:5173',methods:['GET','HEAD','POST','PATCH','DELETE','OPTIONS']});
+ await app.register(cors,{origin:o.corsOrigin??'http://127.0.0.1:5173',methods:['GET','HEAD','POST','PATCH','DELETE','PUT','OPTIONS']});
  await app.register(jwt,{secret:o.secret,sign:{expiresIn:'7d'}});
  await app.register(rateLimit,{max:120,timeWindow:'1 minute'});
  await app.register(swagger,{openapi:{info:{title:'FitStreak API',version:'1.0.0',description:'All business dates use Asia/Shanghai. Demo login is disabled in production.'},components:{securitySchemes:{bearerAuth:{type:'http',scheme:'bearer',bearerFormat:'JWT'}}}}});
@@ -36,14 +39,14 @@ export async function buildApp(o:AppOptions) {
    if(err.validation) {status=400;code='VALIDATION_ERROR';}
    if(status===401) code='UNAUTHORIZED';
    if(code==='23505') {status=409;code='ALREADY_CHECKED_IN';}
-   if(status>=500) {req.log.error(err);code='INTERNAL_ERROR';}
+   if(status>=500) {if(err instanceof AgentError){req.log.error({code:err.code},'AI provider request failed');}else{req.log.error(err);code='INTERNAL_ERROR';}}
    reply.code(status).send({error:{code,requestId:req.id}});
  });
  const secure={security:[{bearerAuth:[]}]};
  const auth=async(req:any)=>{ await req.jwtVerify(); const u=await db.query('SELECT id FROM app_user WHERE id=$1',[req.user.sub]); if(!u.rows.length) fail('UNAUTHORIZED',401); };
  const user=async(id:string)=>(await db.query('SELECT id,nickname,locale,timezone,weekly_goal FROM app_user WHERE id=$1',[id])).rows[0];
  const ownedPlan=async(id:string,owner:string)=>{
-   const row=(await db.query('SELECT *,start_date::text,end_date::text FROM fitness_plan WHERE id=$1 AND user_id=$2',[id,owner])).rows[0];
+   const row=(await db.query(`SELECT *,start_date::text,end_date::text,COALESCE((SELECT json_agg(json_build_object('slug',e.exercise_slug,'sets',e.sets,'reps',e.reps,'duration_seconds',e.duration_seconds,'rest_seconds',e.rest_seconds) ORDER BY e.position) FROM plan_exercise e WHERE e.plan_id=fitness_plan.id),'[]'::json) AS exercises FROM fitness_plan WHERE id=$1 AND user_id=$2`,[id,owner])).rows[0];
    if(!row) fail('NOT_FOUND',404); return row;
  };
  app.get('/health',{schema:{tags:['System']}},async()=>result({status:'ok'}));
@@ -72,7 +75,7 @@ export async function buildApp(o:AppOptions) {
    await db.query(`UPDATE app_user SET ${fields.map((k,i)=>`${k}=$${i+1}`).join(',')} WHERE id=$${params.length}`,params);
    return result(await user(req.user.sub));
  });
- app.get('/api/plans',{preHandler:auth,schema:{...secure,tags:['Plans']}},async req=>result((await db.query('SELECT *,start_date::text,end_date::text FROM fitness_plan WHERE user_id=$1 AND archived_at IS NULL ORDER BY created_at DESC',[req.user.sub])).rows));
+ app.get('/api/plans',{preHandler:auth,schema:{...secure,tags:['Plans']}},async req=>result((await db.query(`SELECT *,start_date::text,end_date::text,COALESCE((SELECT json_agg(json_build_object('slug',e.exercise_slug,'sets',e.sets,'reps',e.reps,'duration_seconds',e.duration_seconds,'rest_seconds',e.rest_seconds) ORDER BY e.position) FROM plan_exercise e WHERE e.plan_id=fitness_plan.id),'[]'::json) AS exercises FROM fitness_plan WHERE user_id=$1 AND archived_at IS NULL ORDER BY created_at DESC`,[req.user.sub])).rows));
  app.post('/api/plans',{preHandler:auth,schema:{...secure,tags:['Plans'],body:object(planFields,['title','activity','target_minutes','weekdays','start_date'])}},async(req,reply)=>{
    const b=req.body as any;if(b.end_date && b.end_date<b.start_date) fail('INVALID_DATE_RANGE');
    const id=randomUUID();await db.query('INSERT INTO fitness_plan(id,user_id,title,activity,target_minutes,weekdays,start_date,end_date) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',[id,req.user.sub,b.title.trim(),b.activity,b.target_minutes,b.weekdays,b.start_date,b.end_date??null]);
@@ -80,6 +83,7 @@ export async function buildApp(o:AppOptions) {
  });
  app.patch('/api/plans/:id',{preHandler:auth,schema:{...secure,tags:['Plans'],params:object({id:uuid},['id']),body:{...object(planFields),minProperties:1}}},async req=>{
    const id=(req.params as any).id, prev=await ownedPlan(id,req.user.sub);if(prev.archived_at) fail('PLAN_ARCHIVED',409);
+   if(prev.agent_run_id||prev.exercises?.length) fail('AI_PLAN_EDIT_UNSUPPORTED',409);
    const b=req.body as any, next={...prev,...b};if(next.end_date && next.end_date<next.start_date) fail('INVALID_DATE_RANGE');
    const fields=Object.keys(b), params=fields.map(k=>k==='title'?b[k].trim():b[k]);params.push(id,req.user.sub);
    await db.query(`UPDATE fitness_plan SET ${fields.map((k,i)=>`${k}=$${i+1}`).join(',')} WHERE id=$${params.length-1} AND user_id=$${params.length}`,params);
@@ -114,6 +118,7 @@ export async function buildApp(o:AppOptions) {
  app.get('/api/articles/:id',{schema:{tags:['Knowledge'],params:object({id:uuid},['id']),querystring:object({locale:{type:'string',enum:['zh-CN','en']}})}},async req=>{
    const row=(await db.query('SELECT a.id,a.category,a.reading_minutes,t.title,t.summary,t.body FROM article a JOIN article_translation t ON t.article_id=a.id WHERE a.id=$1 AND t.locale=$2',[(req.params as any).id,(req.query as any).locale??'zh-CN'])).rows[0];if(!row) fail('NOT_FOUND',404);return result(row);
  });
- app.addHook('onClose',async()=>{await db.close();});
+ const agent=await registerAgent(app,db,auth,today,o.agent);
+ app.addHook('onClose',async()=>{await agent.close();await db.close();});
  await app.ready();return app;
 }

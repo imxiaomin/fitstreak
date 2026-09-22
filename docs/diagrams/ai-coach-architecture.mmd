@@ -1,0 +1,14 @@
+flowchart TD
+  U[用户：健康档案 / 目标 / 本次授权] --> UI[uni-app AI 教练\nH5 / 微信小程序\n中文 / English]
+  UI --> API[Fastify JWT 鉴权与参数校验]
+  API --> JOB[后台 Agent 任务\n幂等 / 版本校验 / 限额 / 取消]
+  JOB <-->|服务端密钥 / HTTPS| LLM[DeepSeek Chat Completions]
+  JOB --> TOOLS[受控工具分发]
+  TOOLS --> READ[健康档案 / 训练汇总 / 动作库]
+  TOOLS --> GUARD[结构 / 日期 / 器械 / 训练量校验]
+  READ --> DB[(PostgreSQL\nhealth_profile / agent_run)]
+  GUARD --> DRAFT[持久化草稿]
+  DRAFT -->|轮询| UI
+  UI -->|用户明确确认| CONFIRM[确认 API\n再次校验 / 用户锁 / 事务]
+  CONFIRM --> PLANS[(fitness_plan / plan_exercise)]
+  PLANS --> CHECKIN[训练计划页 / 每日打卡]

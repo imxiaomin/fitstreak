@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-21T16:01:58.234Z",
+  "generatedAt": "2026-09-22T03:03:30.024Z",
   "environment": {
     "platform": "win32",
     "node": "v24.20.0"
   },
   "stats": {
-    "startTime": "2026-09-21T15:36:08.153Z",
-    "duration": 45720.225999999995,
+    "startTime": "2026-09-22T02:59:48.386Z",
+    "duration": 28142.374,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,
@@ -20,7 +20,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 3382,
+          "durationMs": 7372,
           "errors": []
         }
       ]

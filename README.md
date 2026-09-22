@@ -21,6 +21,7 @@
 |测试状态及验收限制|[testing.md](docs/testing.md)|
 |图标与动作图升级、源文件、验证|[visual-upgrade.md](docs/visual-upgrade.md)|
 |动作素材授权与作者署名|[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)|
+|DeepSeek AI 教练配置、架构与验证|[ai-coach.md](docs/ai-coach.md)|
 
 ## 本地启动
 
@@ -34,6 +35,10 @@ npm run dev
 打开 http://127.0.0.1:5173 ，点击开始使用生成独立演示账号。API文档在 http://127.0.0.1:3000/docs 。默认开发 JWT 密钥为进程随机值，重启后须重新登录；需要稳定本地会话时复制 `apps/api/.env.example` 为 `.env` 并设置自己的随机密钥。
 
 独立 PostgreSQL 的本机连接、pgAdmin/Navicat 查看表、数据迁移与测试隔离，见 [Windows 本地 PostgreSQL](docs/postgresql-local.md)。配置 `apps/api/.env` 的 `DATABASE_URL` 后，后端使用 PostgreSQL；运行 `npm run db:status` 可确认连接与记录数量。
+
+## AI 健身教练
+
+在 `apps/api/.env` 设置 `DEEPSEEK_API_KEY` 并重启后端，即可从 **AI 教练** 输入健康档案和目标，生成训练草稿，确认后自动添加包含动作明细的计划。默认模型为 `deepseek-flash`，可通过 `DEEPSEEK_MODEL` 修改。密钥仅保存在后端；详细步骤及使用范围见 [AI 教练文档](docs/ai-coach.md)。
 
 ## 使用 MSW 开发预览
 
@@ -53,6 +58,7 @@ npm run build
 npm test
 npm run test:e2e
 npm run test:live
+npm run test:agent
 npm run api:export
 ```
 

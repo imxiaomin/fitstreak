@@ -1,6 +1,6 @@
 // Keep useful test evidence without machine-specific paths or command arguments.
 import {readFile,writeFile} from 'node:fs/promises';
-for(const kind of ['e2e','live']){
+for(const kind of ['e2e','live','agent']){
  const path=`docs/test-results-${kind}.json`;
  const report=JSON.parse(await readFile(path,'utf8'));
  if(!report.suites)continue;

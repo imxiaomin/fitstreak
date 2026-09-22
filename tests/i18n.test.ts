@@ -5,4 +5,7 @@ test('FR-12 Chinese and English dictionaries contain the same nonempty keys',asy
  const {dictionaries}=await import('../apps/web/src/lib/i18n.js');
  assert.deepEqual(Object.keys(dictionaries.zh).sort(),Object.keys(dictionaries.en).sort());
  for(const language of Object.values(dictionaries))for(const value of Object.values(language))assert.ok(typeof value==='string'&&value.trim());
+ const {coachDictionaries}=await import('../apps/web/src/lib/coach-i18n.js');
+ assert.deepEqual(Object.keys(coachDictionaries.zh).sort(),Object.keys(coachDictionaries.en).sort());
+ for(const language of Object.values(coachDictionaries))for(const value of Object.values(language))assert.ok(value.trim());
 });

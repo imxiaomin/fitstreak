@@ -7,7 +7,7 @@ try {
  await client.connect();
  const info=await client.query('SELECT current_database() AS database, current_user AS username, version() AS version');
  console.log(info.rows[0]);
- for(const table of ['app_user','fitness_plan','checkin','article','article_translation']) {
+ for(const table of ['app_user','fitness_plan','checkin','article','article_translation','health_profile','agent_run','plan_exercise']) {
   const result=await client.query(`SELECT count(*)::integer AS count FROM ${table}`);
   console.log(`${table}: ${result.rows[0].count}`);
  }

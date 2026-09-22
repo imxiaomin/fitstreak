@@ -10,7 +10,7 @@ const req=(method:any,url:string,payload?:any,auth=token)=>app.inject({method,ur
 before(async()=>{db=await database({url:process.env.TEST_DATABASE_URL});app=await buildApp({db,secret:'test-only-secret-at-least-thirty-two-chars',demo:true,now:()=>new Date('2026-09-21T08:00:00Z')});const a=await req('POST','/api/auth/demo',{},'');token=a.json().data.token;uid=a.json().data.user.id;other=(await req('POST','/api/auth/demo',{},'')).json().data.token;});
 after(async()=>{await app?.close();});
 test('Browser CORS preflight permits profile edits, plan edits and archive',async()=>{
- for(const [method,url] of [['PATCH','/api/me'],['PATCH','/api/plans/'+randomUUID()],['DELETE','/api/plans/'+randomUUID()]]){
+ for(const [method,url] of [['PUT','/api/health-profile'],['PATCH','/api/me'],['PATCH','/api/plans/'+randomUUID()],['DELETE','/api/plans/'+randomUUID()]]){
   const r=await app.inject({method:'OPTIONS',url,headers:{origin:'http://127.0.0.1:5173','access-control-request-method':method,'access-control-request-headers':'authorization,content-type'}});
   assert.equal(r.statusCode,204);
   assert.equal(r.headers['access-control-allow-origin'],'http://127.0.0.1:5173');

@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-09-22T09:52:49.880Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.20.0"
+  },
+  "stats": {
+    "startTime": "2026-09-22T09:50:40.863Z",
+    "duration": 95256.514,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "AI coach: consent, preview, confirmed persistence and bilingual layout at 375px",
+      "file": "coach.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7322,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "AI coach: consent, preview, confirmed persistence and bilingual layout at 768px",
+      "file": "coach.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4340,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "AI coach: consent, preview, confirmed persistence and bilingual layout at 1440px",
+      "file": "coach.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3987,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Follow-up reply is visible and continues its conversation at 375px",
+      "file": "coach.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2943,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Follow-up reply is visible and continues its conversation at 1440px",
+      "file": "coach.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3825,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}
