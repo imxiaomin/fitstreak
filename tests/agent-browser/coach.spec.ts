@@ -6,7 +6,7 @@ for(const width of [375,768,1440])test(`AI coach: consent, preview, confirmed pe
  await page.locator('.health-age input').fill('28');await page.locator('.health-height_cm input').fill('170');await page.locator('.health-weight_kg input').fill('65');
  await page.locator('.profile-consent').click();await page.locator('.save-health').click();await expect(page.locator('.coach-saved')).toBeVisible();
  await page.locator('.coach-prompt textarea').fill('请帮我制定轻松步行计划');await expect(page.locator('.generate-plan')).toBeDisabled();await page.locator('.run-consent').click();
- await page.locator('.generate-plan').click();await expect(page.locator('.confirm-plan')).toBeVisible({timeout:15000});await expect(page.locator('.coach-tools')).toContainText('校验计划草稿');
+ await page.locator('.generate-plan').click();await expect(page.locator('.confirm-plan')).toBeVisible({timeout:15000});await expect(page.locator('.coach-tools')).toContainText('校验计划草稿');await page.locator('.view-draft').click();await expect(page.locator('.draft-dialog')).toContainText('AI 轻松步行');await page.locator('.draft-close').click();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:`docs/screenshots/ai-coach-${width}-zh.png`,fullPage:true});
  await page.locator('.confirm-plan').click();await expect(page.locator('.coach-success')).toContainText('已添加计划数：1');
  await page.getByRole('button',{name:'查看训练计划',exact:true}).click();const card=page.locator('.plan-card').filter({hasText:'AI 轻松步行'});await expect(card).toBeVisible();await expect(card).toContainText('480');await expect(card.getByRole('button',{name:'编辑',exact:true})).toHaveCount(0);
@@ -26,4 +26,11 @@ for(const width of [375,1440])test(`Follow-up reply is visible and continues its
  await page.locator('.coach-reply-input').scrollIntoViewIfNeeded();await page.screenshot({path:`docs/screenshots/ai-followup-${width}.png`,fullPage:true});
  const sent=page.waitForRequest(r=>r.url().endsWith('/api/agent/runs')&&r.method()==='POST');await page.getByRole('button',{name:'发送回复并继续',exact:true}).click();const payload=(await sent).postDataJSON();expect(payload.parent_id).toBeTruthy();expect(payload.message).toBe('以轻松步行为主，每次10分钟');
  await expect(page.locator('.confirm-plan')).toBeVisible({timeout:15000});await expect(page.locator('.coach-reply')).toHaveCount(0);
+});
+
+test('Failed draft is readable with reasons after reload and cannot be added',async({page})=>{
+ await page.setViewportSize({width:375,height:980});await page.goto('/');await page.getByRole('button',{name:'开始使用',exact:true}).click();await page.locator('.mobile-nav').getByRole('button',{name:'AI 教练',exact:true}).click();
+ await page.locator('.health-age input').fill('28');await page.locator('.health-height_cm input').fill('170');await page.locator('.health-weight_kg input').fill('65');await page.locator('.profile-consent').click();await page.locator('.save-health').click();await expect(page.locator('.coach-saved')).toBeVisible();
+ await page.locator('.coach-prompt textarea').fill('测试无效草稿');await page.locator('.run-consent').click();await page.locator('.generate-plan').click();await expect(page.locator('.coach-ai-message')).toContainText('生成未完成');
+ await page.reload();await page.locator('.mobile-nav').getByRole('button',{name:'AI 教练',exact:true}).click();await page.locator('.view-draft').click();await expect(page.locator('.draft-dialog')).toContainText('未通过校验');await expect(page.locator('.draft-issues')).toContainText('次数填 null');await expect(page.locator('.draft-dialog')).toContainText('AI 轻松步行');await expect(page.locator('.confirm-plan')).toHaveCount(0);await page.screenshot({path:'docs/screenshots/ai-invalid-draft-375.png',fullPage:true});
 });

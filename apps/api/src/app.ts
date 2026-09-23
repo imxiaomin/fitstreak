@@ -13,7 +13,7 @@ import {AgentError} from './agent/schema.js';
 import type {AgentConfig} from './agent/provider.js';
 
 declare module '@fastify/jwt' { interface FastifyJWT {payload:{sub:string}; user:{sub:string};} }
-export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean; agent?:AgentConfig};
+export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean; requestLimit?:number; agent?:AgentConfig};
 const uuid={type:'string',format:'uuid'};
 const date={type:'string',format:'date'};
 const object=(properties:Record<string,any>, required:string[]=[])=>({type:'object',additionalProperties:false,properties,required});
@@ -27,7 +27,7 @@ export async function buildApp(o:AppOptions) {
  const app=Fastify({logger:o.logger??false,ajv:{customOptions:{removeAdditional:false,coerceTypes:false}}});
  await app.register(cors,{origin:o.corsOrigin??'http://127.0.0.1:5173',methods:['GET','HEAD','POST','PATCH','DELETE','PUT','OPTIONS']});
  await app.register(jwt,{secret:o.secret,sign:{expiresIn:'7d'}});
- await app.register(rateLimit,{max:120,timeWindow:'1 minute'});
+ await app.register(rateLimit,{max:o.requestLimit??120,timeWindow:'1 minute'});
  await app.register(swagger,{openapi:{info:{title:'FitStreak API',version:'1.0.0',description:'All business dates use Asia/Shanghai. Demo login is disabled in production.'},components:{securitySchemes:{bearerAuth:{type:'http',scheme:'bearer',bearerFormat:'JWT'}}}}});
  await app.register(swaggerUi,{routePrefix:'/docs'});
  app.addHook('onRoute',route=>{const response=responseFor(route.url,String(route.method));if(response)route.schema={...route.schema,response};});

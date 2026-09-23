@@ -29,7 +29,7 @@ export async function database(options: {url?: string; path?: string} = {}): Pro
    const local=new PGlite(options.path);
    db={query:async(sql,params)=>local.query<Record<string,any>>(sql,params),exec:sql=>local.exec(sql),close:()=>local.close(),transaction:work=>local.transaction(tx=>work({query:async(sql,params)=>tx.query<Record<string,any>>(sql,params)}))};
  }
- for (const file of ['001_schema.sql','002_seed.sql','004_ai_coach.sql']) {
+ for (const file of ['001_schema.sql','002_seed.sql','004_ai_coach.sql','005_agent_draft_review.sql']) {
    await db.exec(await readFile(fileURLToPath(new URL(`../../../database/${file}`, import.meta.url)), 'utf8'));
  }
  return db;

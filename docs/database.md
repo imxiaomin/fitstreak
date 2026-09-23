@@ -48,7 +48,7 @@
 
 ## 初始化与维护
 
-依次运行 `001_schema.sql`、`002_seed.sql` 和 `004_ai_coach.sql`，均为可重入初始化。后续结构升级应新增编号迁移文件，不修改已部署版本。`003_queries.sql` 为参数化查询示例，不能把用户输入拼接成 SQL。
+依次运行 `001_schema.sql`、`002_seed.sql` 、`004_ai_coach.sql` 和 `005_agent_draft_review.sql`，均为可重入初始化。后续结构升级应新增编号迁移文件，不修改已部署版本。`003_queries.sql` 为参数化查询示例，不能把用户输入拼接成 SQL。
 
 ## AI 教练扩展（2026-09-22）
 
@@ -62,3 +62,5 @@
 SQL 完整字段、约束和索引见 `database/004_ai_coach.sql`；关系源文件为 `docs/diagrams/ai-coach-er.mmd`。API 启动迁移使用 PostgreSQL advisory lock，避免并行启动时重复 DDL 冲突。确认计划采用同一连接事务，动作明细失败则整批回滚。授权、删除和运行限制见 [AI 教练说明](ai-coach.md)。
 
 演示和测试账号由应用在隔离数据库生成，不写入生产种子。备份使用 PostgreSQL `pg_dump`，恢复至独立数据库后检查用户数、计划数、打卡总分钟及外键约束。PGlite 测试不覆盖真实 PostgreSQL 的连接池、备份与并发性能，应在部署验收时补测。
+
+`005_agent_draft_review.sql` 为 AI 会话增加候选草稿文本与中英文校验原因，均随会话删除。失败候选不写入 `proposal`，不允许通过确认接口添加。

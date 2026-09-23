@@ -3156,6 +3156,28 @@
                           "answer": {
                             "type": "string"
                           },
+                          "candidate_text": {
+                            "type": "string"
+                          },
+                          "validation_issues": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "zh": {
+                                  "type": "string"
+                                },
+                                "en": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "zh",
+                                "en"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
                           "proposal": {
                             "anyOf": [
                               {
@@ -3341,6 +3363,8 @@
                           "start_date",
                           "model",
                           "answer",
+                          "candidate_text",
+                          "validation_issues",
                           "proposal",
                           "error_code",
                           "tool_log",
@@ -3520,6 +3544,28 @@
                         "answer": {
                           "type": "string"
                         },
+                        "candidate_text": {
+                          "type": "string"
+                        },
+                        "validation_issues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "zh": {
+                                "type": "string"
+                              },
+                              "en": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "zh",
+                              "en"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "proposal": {
                           "anyOf": [
                             {
@@ -3705,6 +3751,8 @@
                         "start_date",
                         "model",
                         "answer",
+                        "candidate_text",
+                        "validation_issues",
                         "proposal",
                         "error_code",
                         "tool_log",
@@ -3757,6 +3805,28 @@
                         "answer": {
                           "type": "string"
                         },
+                        "candidate_text": {
+                          "type": "string"
+                        },
+                        "validation_issues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "zh": {
+                                "type": "string"
+                              },
+                              "en": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "zh",
+                              "en"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "proposal": {
                           "anyOf": [
                             {
@@ -3942,6 +4012,8 @@
                         "start_date",
                         "model",
                         "answer",
+                        "candidate_text",
+                        "validation_issues",
                         "proposal",
                         "error_code",
                         "tool_log",
@@ -4083,6 +4155,28 @@
                         "answer": {
                           "type": "string"
                         },
+                        "candidate_text": {
+                          "type": "string"
+                        },
+                        "validation_issues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "zh": {
+                                "type": "string"
+                              },
+                              "en": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "zh",
+                              "en"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "proposal": {
                           "anyOf": [
                             {
@@ -4268,6 +4362,8 @@
                         "start_date",
                         "model",
                         "answer",
+                        "candidate_text",
+                        "validation_issues",
                         "proposal",
                         "error_code",
                         "tool_log",
@@ -4422,6 +4518,28 @@
                         "answer": {
                           "type": "string"
                         },
+                        "candidate_text": {
+                          "type": "string"
+                        },
+                        "validation_issues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "zh": {
+                                "type": "string"
+                              },
+                              "en": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "zh",
+                              "en"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "proposal": {
                           "anyOf": [
                             {
@@ -4607,6 +4725,8 @@
                         "start_date",
                         "model",
                         "answer",
+                        "candidate_text",
+                        "validation_issues",
                         "proposal",
                         "error_code",
                         "tool_log",
@@ -4769,6 +4889,28 @@
                         "answer": {
                           "type": "string"
                         },
+                        "candidate_text": {
+                          "type": "string"
+                        },
+                        "validation_issues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "zh": {
+                                "type": "string"
+                              },
+                              "en": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "zh",
+                              "en"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "proposal": {
                           "anyOf": [
                             {
@@ -4954,6 +5096,8 @@
                         "start_date",
                         "model",
                         "answer",
+                        "candidate_text",
+                        "validation_issues",
                         "proposal",
                         "error_code",
                         "tool_log",

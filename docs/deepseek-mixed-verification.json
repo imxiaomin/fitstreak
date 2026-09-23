@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-09-23T02:19:06.815Z",
+  "provider": "DeepSeek",
+  "model": "deepseek-flash",
+  "syntheticData": true,
+  "storage": "isolated in-memory PGlite",
+  "status": "draft",
+  "error": null,
+  "tools": [
+    {
+      "tool": "get_health_profile",
+      "status": "completed"
+    },
+    {
+      "tool": "get_training_history",
+      "status": "completed"
+    },
+    {
+      "tool": "search_exercises",
+      "status": "completed"
+    },
+    {
+      "tool": "propose_training_plan",
+      "status": "validated"
+    }
+  ],
+  "totalTokens": 4033,
+  "sessions": 5,
+  "candidateRetained": true,
+  "validationIssues": [],
+  "confirmed": true
+}

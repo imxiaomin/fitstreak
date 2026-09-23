@@ -11,7 +11,7 @@ export const Checkin=optional({id,user_id:id,plan_id:id,local_date:date,duration
 export const Article=optional({id,category:text,reading_minutes:number,title:text,summary:text,body:text});
 export const Stats=entity({today:date,from:date,to:date,timezone:text,checkins:number,minutes:number,active_days:number,streak:number,series:list(entity({date,minutes:number,checkins:number}))});
 const ErrorResponse=entity({error:entity({code:text,requestId:text})});
-const AgentRun=entity({id,status:text,message:text,locale:text,start_date:date,model:text,answer:text,proposal:{anyOf:[proposalSchema,{type:'null'}]},error_code:{anyOf:[text,{type:'null'}]},tool_log:list(entity({tool:text,status:text})),total_tokens:number,created_plan_ids:list(id),created_at:text,updated_at:text});
+const AgentRun=entity({id,status:text,message:text,locale:text,start_date:date,model:text,answer:text,candidate_text:text,validation_issues:list(entity({zh:text,en:text})),proposal:{anyOf:[proposalSchema,{type:'null'}]},error_code:{anyOf:[text,{type:'null'}]},tool_log:list(entity({tool:text,status:text})),total_tokens:number,created_plan_ids:list(id),created_at:text,updated_at:text});
 const Health={...healthSchema,properties:{...healthSchema.properties,version:id,updated_at:text},required:[...healthSchema.required,'version','updated_at']};
 export function responseFor(url:string,method:string){
  let data:any,status=200;

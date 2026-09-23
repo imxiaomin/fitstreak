@@ -106,3 +106,20 @@ test('Advanced training request with October 1 and five weekly days passes reque
  const rejected=await req('POST','/api/agent/runs',{...payload,request_key:randomUUID(),...change});assert.equal(rejected.statusCode,400);assert.equal(rejected.json().error.code,code);
  }
 });
+
+test('Invalid candidates and actionable issues remain readable but cannot be confirmed',async()=>{
+ const {req}=await setup('bad-plan');const id=(await req('POST','/api/agent/runs',input())).json().data.id;const run=await wait(req,id);
+ assert.equal(run.status,'failed');assert.equal(run.error_code,'AI_INVALID_PLAN');assert.ok(run.candidate_text.includes('unknown-exercise'));assert.ok(run.validation_issues[0].en.includes('/sessions/0/exercises/0/slug'));assert.equal(run.proposal,null);
+ assert.equal((await req('POST',`/api/agent/runs/${id}/confirm`,{confirm:true})).statusCode,409);
+ assert.equal((await req('GET','/api/agent/runs/'+id)).json().data.candidate_text,run.candidate_text);
+ assert.ok(!JSON.stringify(run).includes('test-only-private-reasoning'));
+});
+for(const mode of ['repair','plain-once'])test(`Agent recovers from ${mode} and clears validation issues on success`,async()=>{
+ let repairMessage='';const base=testTransport(mode);const transport=(async(url:any,init:any)=>{const body=JSON.parse(init.body);for(const m of body.messages)if(m.role==='tool'&&m.content.includes('AI_INVALID_PLAN'))repairMessage=m.content;return base(url,init);}) as typeof fetch;
+ const {req}=await setup(mode,true,transport);const id=(await req('POST','/api/agent/runs',input())).json().data.id;const run=await wait(req,id);assert.equal(run.status,'draft');assert.deepEqual(run.validation_issues,[]);assert.ok(run.candidate_text);
+ if(mode==='repair')assert.ok(repairMessage.includes('reps=null'));
+});
+test('DeepSeek selects supported tool choice per thinking mode and reports truncation',async()=>{
+ for(const thinking of [false,true]){const provider=createProvider({apiKey:'test',thinking,transport:(async(_url:any,init:any)=>{const body=JSON.parse(init.body);assert.equal(body.tool_choice,thinking?'auto':'required');return new Response(JSON.stringify({choices:[{finish_reason:'length',message:{role:'assistant',content:null}}]}));}) as typeof fetch});
+ await assert.rejects(()=>provider.complete([],[],new AbortController().signal),{code:'AI_OUTPUT_TRUNCATED'});}
+});

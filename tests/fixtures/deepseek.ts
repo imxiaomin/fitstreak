@@ -14,6 +14,9 @@ export function testTransport(mode='normal'):typeof fetch{return (async(_url:any
  if((mode==='question'||messages.some(m=>m.role==='user'&&m.content?.includes('请先询问我的偏好')))&&messages.filter(m=>m.role==='user').length===1)return toolResponse('ask_followup',{question:'你希望以步行还是力量训练为主？'});
  if(toolMessages.length<3)return toolResponse(['get_health_profile','get_training_history','search_exercises'][toolMessages.length],{},'read-'+toolMessages.length);
  const plan=draft(start);
+ if(mode==='plain-once'&&!messages.some(m=>m.role==='user'&&m.content?.includes('Return a tool call')))return new Response(JSON.stringify({choices:[{finish_reason:'stop',message:{role:'assistant',content:'Here is an outline; I will submit a structured plan.'}}],usage:{total_tokens:120}}));
+ if(mode==='repair'&&toolMessages.length===3)plan.sessions[0].exercises[0].reps=10 as any;
+ if(messages.some(m=>m.role==='user'&&m.content?.includes('测试无效草稿')))plan.sessions[0].exercises[0].reps=10 as any;
  if(mode==='bad-plan')plan.sessions[0].exercises[0].slug='unknown-exercise';
  return toolResponse('propose_training_plan',plan,'propose');
  }) as typeof fetch;}
