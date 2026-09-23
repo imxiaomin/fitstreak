@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-22T03:03:30.024Z",
+  "generatedAt": "2026-09-23T01:42:26.313Z",
   "environment": {
     "platform": "win32",
     "node": "v24.20.0"
   },
   "stats": {
-    "startTime": "2026-09-22T02:59:48.386Z",
-    "duration": 28142.374,
-    "expected": 1,
+    "startTime": "2026-09-23T01:41:20.846Z",
+    "duration": 13852.582999999999,
+    "expected": 3,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
@@ -20,7 +20,31 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 7372,
+          "durationMs": 3142,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Archive confirmation reports failures and persists success at 375px",
+      "file": "app.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 983,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Archive confirmation reports failures and persists success at 1440px",
+      "file": "app.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1015,
           "errors": []
         }
       ]

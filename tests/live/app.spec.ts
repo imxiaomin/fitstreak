@@ -18,3 +18,13 @@ test('Real API and persistent database support the complete browser workflow',as
  await expect(page.locator('.preferences .field').filter({hasText:'昵称'}).locator('input')).toHaveValue('偏好保存验证');
  await expect(page.locator('.preferences .field').filter({hasText:'每周目标（天）'}).locator('input')).toHaveValue('6');
 });
+
+for(const width of [375,1440])test(`Archive confirmation reports failures and persists success at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:980});await page.goto('/');await page.getByRole('button',{name:'开始使用',exact:true}).click();
+ const menu=page.locator(width<=760?'.mobile-nav':'.sidebar');await menu.getByRole('button',{name:'训练计划',exact:true}).click();
+ const card=page.locator('.plan-card').filter({hasText:'Morning flow'});await card.getByRole('button',{name:'归档',exact:true}).click();
+ await page.route('**/api/plans/*',async route=>{if(route.request().method()==='DELETE')await route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:{code:'INTERNAL_ERROR'}})});else await route.continue();});
+ await page.locator('.confirm-dialog').getByRole('button',{name:'归档',exact:true}).click();await expect(page.locator('.archive-error')).toBeVisible();await expect(card).toBeVisible();await page.unroute('**/api/plans/*');
+ const response=page.waitForResponse(r=>r.request().method()==='DELETE'&&r.url().includes('/api/plans/'));await page.locator('.confirm-dialog').getByRole('button',{name:'归档',exact:true}).click();const archived=await response;expect(archived.status(),await archived.text()).toBe(200);
+ await expect(page.locator('.confirm-dialog')).toHaveCount(0);await expect(card).toHaveCount(0);await page.reload();await menu.getByRole('button',{name:'训练计划',exact:true}).click();await expect(card).toHaveCount(0);
+});
