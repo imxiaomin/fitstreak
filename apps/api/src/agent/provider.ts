@@ -14,7 +14,7 @@ export function createProvider(config:AgentConfig){
   let response:Response;
   try{response=await (config.transport??fetch)(base+'/chat/completions',{method:'POST',redirect:'error',signal:AbortSignal.any([signal,AbortSignal.timeout(config.timeoutMs??45000)]),headers:{Authorization:`Bearer ${config.apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({model,messages,tools,tool_choice:config.thinking?'auto':'required',thinking:{type:config.thinking?'enabled':'disabled'},max_tokens:5000,stream:false})});}
   catch{throw new AgentError(signal.aborted?'AI_CANCELLED':'AI_TIMEOUT',503);}
-  if(!response.ok){await response.body?.cancel();throw new AgentError(response.status===401||response.status===403?'AI_AUTH_FAILED':response.status===429?'AI_RATE_LIMITED':'AI_UPSTREAM_ERROR',503);}
+  if(!response.ok){await response.body?.cancel();throw new AgentError(response.status===401||response.status===403?'AI_AUTH_FAILED':response.status===402?'AI_PROVIDER_BALANCE_LOW':response.status===429?'AI_PROVIDER_RATE_LIMITED':response.status===503?'AI_PROVIDER_BUSY':'AI_UPSTREAM_ERROR',503);}
   let payload:any;try{const raw=await response.text();if(raw.length>500000)throw new Error();payload=JSON.parse(raw);}catch{throw new AgentError('AI_INVALID_RESPONSE',502);}
   const choice=payload?.choices?.[0],m=choice?.message;
   if(choice?.finish_reason==='length')throw new AgentError('AI_OUTPUT_TRUNCATED',502);

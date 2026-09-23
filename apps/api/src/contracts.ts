@@ -25,7 +25,7 @@ export function responseFor(url:string,method:string){
  else if(url==='/api/articles')data=list(Article);
  else if(url==='/api/articles/:id')data=Article;
  else if(url==='/api/health-profile')data=method==='DELETE'?entity({deleted:{type:'boolean'}}):{anyOf:[Health,{type:'null'}]};
- else if(url==='/api/agent/status')data=entity({configured:{type:'boolean'},provider:text,model:text});
+ else if(url==='/api/agent/status')data=entity({configured:{type:'boolean'},provider:text,model:text,quota:entity({limit:number,used:number,remaining:number,window_minutes:number,next_restore_at:{anyOf:[text,{type:'null'}]}})});
  else if(url==='/api/agent/runs'){data=method==='GET'?list(AgentRun):AgentRun;if(method==='POST')return {200:entity({data}),202:entity({data}),'4xx':ErrorResponse,'5xx':ErrorResponse};}
  else if(url.startsWith('/api/agent/runs/'))data=AgentRun;
  else return undefined;

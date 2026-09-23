@@ -107,3 +107,20 @@ npm run api:export
 - 真实 DeepSeek 隔离测试：虚构档案、一周 5 天、每天 30 分钟、力量与有氧；本次首次提案通过，5 项计划确认入库，返回总用量 4033 tokens。见 [联调记录](deepseek-mixed-verification.json)。此结果不保证每次模型输出均合格。
 
 再次执行该付费隔离测试：`npx tsx scripts/verify-deepseek.mts --mixed`。
+
+## 请求次数与错误提示（2026-09-23）
+
+AI 教练显示本系统过去 60 分钟已用次数、剩余次数和下次恢复 1 次的时间，页面每 30 秒自动刷新，也可手动刷新。每位用户最多 6 次，按滚动时间窗口逐次恢复，不是整点清零。次数为零时禁止提交，已输入的回复保留。
+
+每次被后端接收的生成任务计一次，包括补充回答、生成失败或取消；同一任务内部纠错不额外计次，查看草稿不计次。提交前被拒绝的请求不计次。统计来自当前用户的任务记录。
+
+| 情况 | 错误码 | 页面说明 |
+| --- | --- | --- |
+| 本系统 6 次用完 | AI_USER_RATE_LIMITED | 等待页面显示的恢复时间 |
+| 本系统并发容量已满 | AI_CAPACITY_BUSY | 稍后重试，本次未扣次数 |
+| DeepSeek 请求频率受限（429） | AI_PROVIDER_RATE_LIMITED | 服务商限流，稍后重试 |
+| DeepSeek 账户余额不足（402） | AI_PROVIDER_BALANCE_LOW | 管理员检查余额或充值 |
+| DeepSeek 服务繁忙（503） | AI_PROVIDER_BUSY | 服务商繁忙，稍后重试 |
+| 普通页面接口访问频繁 | HTTP_RATE_LIMITED | 等待一分钟再试 |
+
+显示的次数仅属于本系统，不代表 DeepSeek 的余额或服务商剩余请求数。服务商未返回可用的剩余次数时，不推测具体数值。旧记录中原有 AI_RATE_LIMITED 无法追溯具体来源，界面明确说明。状态码参考 [DeepSeek 官方错误说明](https://api-docs.deepseek.com/quick_start/error_codes/)。

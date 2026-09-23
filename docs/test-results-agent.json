@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-23T02:22:27.127Z",
+  "generatedAt": "2026-09-23T07:27:54.987Z",
   "environment": {
     "platform": "win32",
     "node": "v24.20.0"
   },
   "stats": {
-    "startTime": "2026-09-23T02:20:44.469Z",
-    "duration": 22676.679,
-    "expected": 6,
+    "startTime": "2026-09-23T02:34:58.921Z",
+    "duration": 26154.754,
+    "expected": 7,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
@@ -20,7 +20,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 3688,
+          "durationMs": 3418,
           "errors": []
         }
       ]
@@ -32,7 +32,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 2188,
+          "durationMs": 2478,
           "errors": []
         }
       ]
@@ -44,7 +44,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 2571,
+          "durationMs": 2202,
           "errors": []
         }
       ]
@@ -56,7 +56,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1902,
+          "durationMs": 2021,
           "errors": []
         }
       ]
@@ -68,7 +68,7 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1923,
+          "durationMs": 1954,
           "errors": []
         }
       ]
@@ -80,7 +80,19 @@
       "results": [
         {
           "status": "passed",
-          "durationMs": 1471,
+          "durationMs": 1639,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Allowance exhaustion is visible and refreshing restores the generate button",
+      "file": "coach.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1194,
           "errors": []
         }
       ]

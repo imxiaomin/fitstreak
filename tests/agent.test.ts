@@ -123,3 +123,18 @@ test('DeepSeek selects supported tool choice per thinking mode and reports trunc
  for(const thinking of [false,true]){const provider=createProvider({apiKey:'test',thinking,transport:(async(_url:any,init:any)=>{const body=JSON.parse(init.body);assert.equal(body.tool_choice,thinking?'auto':'required');return new Response(JSON.stringify({choices:[{finish_reason:'length',message:{role:'assistant',content:null}}]}));}) as typeof fetch});
  await assert.rejects(()=>provider.complete([],[],new AbortController().signal),{code:'AI_OUTPUT_TRUNCATED'});}
 });
+
+test('Generation allowance counts accepted attempts, isolates users and restores each slot after an hour',async()=>{
+ const {req,db,app}=await setup('network');let status=(await req('GET','/api/agent/status')).json().data;assert.equal(status.quota.remaining,6);assert.equal(status.quota.next_restore_at,null);
+ const payload=input();let firstId='';
+ for(let i=0;i<6;i++){const response=await req('POST','/api/agent/runs',i===0?payload:input());assert.equal(response.statusCode,202);await wait(req,response.json().data.id);if(i===0)firstId=response.json().data.id;}
+ status=(await req('GET','/api/agent/status')).json().data;assert.equal(status.quota.used,6);assert.equal(status.quota.remaining,0);assert.ok(Date.parse(status.quota.next_restore_at)>Date.now());
+ assert.equal((await req('POST','/api/agent/runs',input())).json().error.code,'AI_USER_RATE_LIMITED');assert.equal((await req('POST','/api/agent/runs',payload)).json().data.id,firstId);
+ const other=(await app.inject({method:'POST',url:'/api/auth/demo',payload:{}})).json().data.token;assert.equal((await req('GET','/api/agent/status',undefined,other)).json().data.quota.remaining,6);
+ await db.query("UPDATE agent_run SET created_at=CURRENT_TIMESTAMP-INTERVAL '61 minutes' WHERE id=$1",[firstId]);status=(await req('GET','/api/agent/status')).json().data;assert.equal(status.quota.remaining,1);assert.equal(status.quota.used,5);
+});
+test('Provider balance, rate limit and overload have distinct public error codes',async()=>{
+ for(const [status,code] of [[402,'AI_PROVIDER_BALANCE_LOW'],[429,'AI_PROVIDER_RATE_LIMITED'],[503,'AI_PROVIDER_BUSY']] as const){
+ const provider=createProvider({apiKey:'fixture',transport:(async()=>new Response('sensitive provider body',{status})) as typeof fetch});await assert.rejects(()=>provider.complete([],[],new AbortController().signal),{code});
+ }
+});

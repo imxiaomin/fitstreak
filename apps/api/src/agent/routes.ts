@@ -23,7 +23,10 @@ export async function registerAgent(app:FastifyInstance,db:Database,auth:(req:an
  };
  const profile=async(user:string,q:Queryable=db)=>{const row=(await q.query('SELECT data,version,ai_consent,updated_at FROM health_profile WHERE user_id=$1',[user])).rows[0];if(!row)throw new AgentError('HEALTH_PROFILE_REQUIRED');return {...row.data,ai_consent:row.ai_consent,version:row.version,updated_at:row.updated_at};};
  function abortUser(user:string){for(const {user:owner,controller} of controllers.values())if(owner===user)controller.abort();}
- app.get('/api/agent/status',{preHandler:auth,schema:secure},async()=>({data:{configured:provider.configured,provider:'DeepSeek',model:provider.model}}));
+ app.get('/api/agent/status',{preHandler:auth,schema:secure},async req=>{
+  const row=(await db.query("SELECT COUNT(*)::int AS used, MIN(created_at)+INTERVAL '1 hour' AS next_restore_at FROM agent_run WHERE user_id=$1 AND created_at>CURRENT_TIMESTAMP-INTERVAL '1 hour'",[req.user.sub])).rows[0];
+  return {data:{configured:provider.configured,provider:'DeepSeek',model:provider.model,quota:{limit:6,used:row.used,remaining:Math.max(0,6-row.used),window_minutes:60,next_restore_at:row.next_restore_at?new Date(row.next_restore_at).toISOString():null}}};
+ });
  app.get('/api/health-profile',{preHandler:auth,schema:secure},async req=>{
   const rows=(await db.query('SELECT data,version,ai_consent,updated_at FROM health_profile WHERE user_id=$1',[req.user.sub])).rows;
   return {data:rows.length?{...rows[0].data,version:rows[0].version,ai_consent:rows[0].ai_consent,updated_at:rows[0].updated_at}:null};
@@ -124,8 +127,9 @@ export async function registerAgent(app:FastifyInstance,db:Database,auth:(req:an
    const active=(await tx.query("SELECT id FROM agent_run WHERE user_id=$1 AND status IN ('queued','running') AND created_at>=CURRENT_TIMESTAMP-INTERVAL '3 minutes'",[user])).rows;
    if(active.length)throw new AgentError('AI_BUSY',409);
    await tx.query("UPDATE agent_run SET status='failed',error_code='AI_INTERRUPTED' WHERE user_id=$1 AND status IN ('queued','running')",[user]);
-   const usage=(await tx.query("SELECT COUNT(*)::int AS count FROM agent_run WHERE user_id=$1 AND created_at>=CURRENT_TIMESTAMP-INTERVAL '1 hour'",[user])).rows[0];
-   if(usage.count>=6||controllers.size>=4)throw new AgentError('AI_RATE_LIMITED',429);
+   const usage=(await tx.query("SELECT COUNT(*)::int AS count FROM agent_run WHERE user_id=$1 AND created_at>CURRENT_TIMESTAMP-INTERVAL '1 hour'",[user])).rows[0];
+   if(usage.count>=6)throw new AgentError('AI_USER_RATE_LIMITED',429);
+   if(controllers.size>=4)throw new AgentError('AI_CAPACITY_BUSY',503);
    await tx.query("INSERT INTO agent_run(id,user_id,request_key,health_version,message,locale,start_date,model,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,'queued')",[id,user,b.request_key,h.version,b.message,b.locale,b.start_date,provider.model]);
   });}catch(e:any){if(e.code==='23505'){const r=(await db.query('SELECT id FROM agent_run WHERE user_id=$1 AND request_key=$2',[user,b.request_key])).rows[0];if(r)return {data:await publicRun(r.id,user)};throw new AgentError('AI_BUSY',409);}throw e;}
   if(duplicateId)return {data:await publicRun(duplicateId,user)};

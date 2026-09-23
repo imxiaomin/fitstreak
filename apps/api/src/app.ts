@@ -44,6 +44,7 @@ export async function buildApp(o:AppOptions) {
      }
    }
    if(status===401) code='UNAUTHORIZED';
+   if(status===429&&!(err instanceof AgentError))code='HTTP_RATE_LIMITED';
    if(code==='23505') {status=409;code='ALREADY_CHECKED_IN';}
    if(status>=500) {if(err instanceof AgentError){req.log.error({code:err.code},'AI provider request failed');}else{req.log.error(err);code='INTERNAL_ERROR';}}
    reply.code(status).send({error:{code,requestId:req.id}});

@@ -2450,12 +2450,48 @@
                         },
                         "model": {
                           "type": "string"
+                        },
+                        "quota": {
+                          "type": "object",
+                          "properties": {
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "used": {
+                              "type": "integer"
+                            },
+                            "remaining": {
+                              "type": "integer"
+                            },
+                            "window_minutes": {
+                              "type": "integer"
+                            },
+                            "next_restore_at": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "limit",
+                            "used",
+                            "remaining",
+                            "window_minutes",
+                            "next_restore_at"
+                          ],
+                          "additionalProperties": false
                         }
                       },
                       "required": [
                         "configured",
                         "provider",
-                        "model"
+                        "model",
+                        "quota"
                       ],
                       "additionalProperties": false
                     }
