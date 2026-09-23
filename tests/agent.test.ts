@@ -97,3 +97,12 @@ test('DeepSeek adapter preserves tool reasoning privately and rejects arbitrary 
  assert.throws(()=>createProvider({apiKey:'x',baseUrl:'https://example.com'}));
  const provider=createProvider({apiKey:'key',transport:testTransport()});const answer=await provider.complete([{role:'system',content:'Start date 2026-09-22'}],[],new AbortController().signal);assert.equal(answer.message.reasoning_content,'test-only-private-reasoning');
 });
+
+test('Advanced training request with October 1 and five weekly days passes request validation',async()=>{
+ const {req}=await setup();await req('PUT','/api/health-profile',{...health,weekly_days:5,session_minutes:30,experience:'regular'});
+ const payload={...input(),message:'请帮我安排一周的进阶训练，每日训练30分钟，需要有力量训练和有氧训练，以达到有效减脂和塑形的目标',start_date:'2026-10-01'};
+ const response=await req('POST','/api/agent/runs',payload);assert.equal(response.statusCode,202,response.body);assert.equal((await wait(req,response.json().data.id)).status,'draft');
+ for(const [change,code] of [[{start_date:'10-01'},'AI_INVALID_START_DATE'],[{message:''},'AI_INVALID_MESSAGE'],[{consent:false},'AI_CONSENT_REQUIRED'],[{request_key:'invalid'},'AI_INVALID_REQUEST']] as const){
+ const rejected=await req('POST','/api/agent/runs',{...payload,request_key:randomUUID(),...change});assert.equal(rejected.statusCode,400);assert.equal(rejected.json().error.code,code);
+ }
+});

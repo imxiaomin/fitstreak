@@ -36,7 +36,13 @@ export async function buildApp(o:AppOptions) {
  app.setErrorHandler((e,req,reply)=>{
    const err=e as any;
    let status=err.statusCode??500, code=err.code??'INTERNAL_ERROR';
-   if(err.validation) {status=400;code='VALIDATION_ERROR';}
+   if(err.validation) {
+     status=400;code='VALIDATION_ERROR';
+     if(req.method==='POST'&&req.routeOptions.url==='/api/agent/runs'){
+       const fields=err.validation.map((v:any)=>v.instancePath?.split('/')[1]||v.params?.missingProperty);
+       code=fields.includes('start_date')?'AI_INVALID_START_DATE':fields.includes('message')?'AI_INVALID_MESSAGE':fields.includes('consent')?'AI_CONSENT_REQUIRED':'AI_INVALID_REQUEST';
+     }
+   }
    if(status===401) code='UNAUTHORIZED';
    if(code==='23505') {status=409;code='ALREADY_CHECKED_IN';}
    if(status>=500) {if(err instanceof AgentError){req.log.error({code:err.code},'AI provider request failed');}else{req.log.error(err);code='INTERNAL_ERROR';}}
