@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-10-22T03:18:01.601Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.20.0"
+  },
+  "stats": {
+    "startTime": "2026-10-22T03:14:57.957Z",
+    "duration": 88537.61,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "Nutrition CRUD, trends and bilingual layout at 375px",
+      "file": "nutrition.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8222,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Nutrition CRUD, trends and bilingual layout at 768px",
+      "file": "nutrition.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4034,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "Nutrition CRUD, trends and bilingual layout at 1440px",
+      "file": "nutrition.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6977,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "A photographed meal is authorized, reviewed and privately saved",
+      "file": "nutrition.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5213,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "A chosen meal plan creates records only after activation and meal check-in",
+      "file": "nutrition.spec.ts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4902,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

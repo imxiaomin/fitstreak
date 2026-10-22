@@ -48,7 +48,7 @@
 
 ## 初始化与维护
 
-依次运行 `001_schema.sql`、`002_seed.sql` 、`004_ai_coach.sql` 和 `005_agent_draft_review.sql`，均为可重入初始化。后续结构升级应新增编号迁移文件，不修改已部署版本。`003_queries.sql` 为参数化查询示例，不能把用户输入拼接成 SQL。
+依次运行 `001_schema.sql`、`002_seed.sql` 、`004_ai_coach.sql` 、`005_agent_draft_review.sql` 和 `006_nutrition.sql`，均为可重入初始化。后续结构升级应新增编号迁移文件，不修改已部署版本。`003_queries.sql` 为参数化查询示例，不能把用户输入拼接成 SQL。
 
 ## AI 教练扩展（2026-09-22）
 
@@ -64,3 +64,7 @@ SQL 完整字段、约束和索引见 `database/004_ai_coach.sql`；关系源文
 演示和测试账号由应用在隔离数据库生成，不写入生产种子。备份使用 PostgreSQL `pg_dump`，恢复至独立数据库后检查用户数、计划数、打卡总分钟及外键约束。PGlite 测试不覆盖真实 PostgreSQL 的连接池、备份与并发性能，应在部署验收时补测。
 
 `005_agent_draft_review.sql` 为 AI 会话增加候选草稿文本与中英文校验原因，均随会话删除。失败候选不写入 `proposal`，不允许通过确认接口添加。
+
+## 饮食扩展（2026-10-21）
+
+新增 nutrition_profile、nutrition_job、nutrition_day、nutrition_meal。图片识别与计划任务共用幂等任务表；餐食通过包含 user_id 的复合外键关联私有照片及计划。计划打卡按用户、计划、日期、餐次唯一，激活与写餐均锁定用户行执行事务。每日代谢快照保留首次记录时依据。详见 [饮食模块说明](nutrition.md) 与 [E-R 源文件](diagrams/nutrition-er.mmd)。

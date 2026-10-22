@@ -32,6 +32,7 @@ jobs:
       - run: npm run test:e2e
       - run: npm run test:live
       - run: npm run test:agent
+      - run: npm run test:nutrition
       - run: node scripts/summarize-test-reports.mjs
       - uses: actions/upload-artifact@v4
         if: always()
@@ -42,6 +43,7 @@ jobs:
             docs/test-results-e2e.json
             docs/test-results-live.json
             docs/test-results-agent.json
+            docs/test-results-nutrition.json
             test-results/
             apps/web/dist/build/
   document-review:

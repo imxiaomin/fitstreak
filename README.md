@@ -80,3 +80,9 @@ Windows 浏览器测试默认使用已安装的 Edge，Linux CI 使用 Playwrigh
 文档在CI使用 `scripts/render_docx.py` 转页图，人工检查分页和中文字体。软件交付与微信正式上线验收的状态以测试报告为准。
 
 全部交付项及待实际环境验收项见 [交付清单](docs/delivery-checklist.md)。
+
+## 饮食记录与 AI 饮食计划
+
+导航新增「饮食记录」：相册／拍照识别、校正后保存每餐、营养素与热量差、日周月摄入图表、三种风格的七日饮食计划及按餐打卡。重启后端会自动执行 `database/006_nutrition.sql`，前端刷新即可看到新入口；微信端需重新编译。
+
+沿用后端 `DEEPSEEK_API_KEY`，图片模型默认 `DEEPSEEK_VISION_MODEL=deepseek-flash`。未配置 AI 时仍能手动记录。照片识别是份量估算，保存前请复核。详细计算口径、配置和图源见 [饮食功能说明](docs/nutrition.md)。隔离 Mock 页面验证运行 `npm run test:nutrition`。

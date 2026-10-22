@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-22",
+  "fullBackendRegression": {
+    "passed": 76,
+    "failed": 0,
+    "database": "isolated PGlite"
+  },
+  "finalDomainAndI18n": {
+    "passed": 20,
+    "failed": 0
+  },
+  "finalPostgreSQLNutrition": {
+    "passed": 8,
+    "failed": 0,
+    "database": "fitstreak_test (isolated)"
+  },
+  "nutritionBrowser": {
+    "passed": 5,
+    "failed": 0,
+    "model": "explicit mock",
+    "widths": [
+      375,
+      768,
+      1440
+    ],
+    "languages": [
+      "zh-CN",
+      "en"
+    ]
+  },
+  "builds": [
+    "H5",
+    "mp-weixin",
+    "API TypeScript"
+  ],
+  "realModelReport": "deepseek-nutrition-verification.json",
+  "pending": [
+    "WeChat actual AppID and device camera/album permissions",
+    "Real meal image accuracy against weighed portions"
+  ]
+}

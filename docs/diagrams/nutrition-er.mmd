@@ -1,0 +1,42 @@
+erDiagram
+    app_user ||--o| nutrition_profile : owns
+    app_user ||--o{ nutrition_job : requests
+    app_user ||--o{ nutrition_day : snapshots
+    app_user ||--o{ nutrition_meal : records
+    app_user ||--o{ checkin : completes
+    nutrition_job o|--o{ nutrition_meal : photo_analysis
+    nutrition_job o|--o{ nutrition_meal : meal_plan
+    nutrition_profile {
+        uuid user_id PK,FK
+        jsonb data
+        uuid version
+    }
+    nutrition_job {
+        uuid id PK
+        uuid user_id FK
+        uuid request_key
+        string kind
+        string status
+        text image_data
+        jsonb foods
+        jsonb proposal
+    }
+    nutrition_day {
+        uuid user_id PK,FK
+        date local_date PK
+        int bmr_kcal
+        numeric weight_kg
+        int target_kcal
+        uuid profile_version
+    }
+    nutrition_meal {
+        uuid id PK
+        uuid user_id FK
+        uuid request_key
+        date local_date
+        string meal_type
+        jsonb foods
+        uuid analysis_id FK
+        uuid plan_id FK
+        string plan_slot
+    }

@@ -11,6 +11,7 @@
    <view v-else class="content">
     <view v-if="loading" class="state-panel">{{t('loading')}}</view>
     <view v-if="error" class="error-banner"><text>{{t(error)}}</text><button role="button" tabindex="0" class="small-button" @click="load">{{t('retry')}}</button></view>
+    <NutritionTracker v-if="page==='nutrition'" @unauthorized="sessionReady=false;error='UNAUTHORIZED'"/>
     <AICoach v-if="page==='coach'" @created="load" @view-plans="navigate('plans')" @unauthorized="sessionReady=false;error='UNAUTHORIZED'"/><template v-if="page==='home'">
      <view class="hero"><view class="hero-copy"><text class="eyebrow">{{dateLabel}} · FITSTREAK</text><text class="hero-title">{{t('greeting')}}</text><text class="hero-subtitle">{{t('subtitle')}}</text><button role="button" tabindex="0" class="primary" @click="openPlan()"><AppIcon name="plus" tone="white"/>{{t('newPlan')}}</button></view><view class="hero-movement"><view class="hero-movement-orbit"/><view class="hero-movement-image"><ExerciseArt :exercise="exercises[4]" :frame="2"/></view><view class="hero-movement-note"><text>{{et('hero')}}</text><text>{{exerciseName(exercises[4])}} · 02 / 03</text></view><button role="button" tabindex="0" class="hero-movement-link" @click="openLibrary"><AppIcon name="arrow" tone="white"/><text>{{et('browse')}}</text></button></view></view>
      <view class="metric-grid"><view v-for="m in metrics" :key="m.key" class="metric panel"><view class="metric-heading"><text>{{t(m.key)}}</text><view class="metric-symbol" :class="m.color"><AppIcon :name="m.icon"/></view></view><view class="metric-value">{{m.value}}<text>{{t(m.unit)}}</text></view><text class="muted small">{{t(m.key==='streak'?'dateHint':'week')}}</text></view></view>
@@ -35,6 +36,7 @@
 import {ref,computed,onMounted,onUnmounted} from 'vue';
 import AppIcon from '../../components/AppIcon.vue';
 import AICoach from '../../components/AICoach.vue';
+import NutritionTracker from '../../components/NutritionTracker.vue';
 import PlanExercises from '../../components/PlanExercises.vue';
 import ExerciseArt from '../../components/ExerciseArt.vue';
 import ExerciseReference from '../../components/ExerciseReference.vue';
@@ -44,7 +46,7 @@ const learnSection=ref('articles');
 function openLibrary(){learnSection.value='movements';navigate('learn');}
 import {t,locale,setLocale,formatDate} from '../../lib/i18n';
 import {request,signIn,session,demoMode} from '../../lib/api';
-const nav=['home','plans','coach','stats','learn','profile'];const activities=['run','strength','yoga','walk','cycle'];
+const nav=['home','plans','coach','nutrition','stats','learn','profile'];const activities=['run','strength','yoga','walk','cycle'];
 const page=ref('home'),sessionReady=ref(Boolean(session.token)),busy=ref(false),loading=ref(false),error=ref(''),me=ref<any>(null),plans=ref<any[]>([]),history=ref<any[]>([]),articles=ref<any[]>([]),article=ref<any>(null),category=ref('all'),range=ref(7);
 const initialStats={today:'',minutes:0,checkins:0,streak:0,active_days:0,series:[] as any[]};const stats7=ref({...initialStats}),statsRange=ref({...initialStats});
 const modal=ref(''),editId=ref(''),formError=ref(''),checking=ref<any>(null),archiveTarget=ref<any>(null),archiveError=ref('');

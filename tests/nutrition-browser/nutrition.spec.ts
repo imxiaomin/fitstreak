@@ -1,0 +1,105 @@
+import { test, expect, type Page } from '@playwright/test';
+async function enter(page: Page, width: number) {
+  page.on('pageerror', error => { throw error; });
+  await page.setViewportSize({ width, height: 980 });
+  await page.goto('/');
+  await page.getByRole('button', { name: '开始使用', exact: true }).click();
+  const loaded = page.waitForResponse(r => r.url().includes('/api/nutrition/summary?'));
+  await page.locator(width <= 760 ? '.mobile-nav' : '.sidebar').getByRole('button', { name: '饮食记录', exact: true }).click();
+  await loaded;
+  await expect(page.locator('.nutrition-title')).toHaveText('饮食与能量');
+}
+async function profile(page: Page) {
+  if (!(await page.locator('.nutrition-profile').isVisible())) await page.locator('.nutrition-profile-toggle').click();
+  await page.locator('.nutrition-profile-age input').fill('28');
+  await page.locator('.nutrition-profile-height_cm input').fill('170');
+  await page.locator('.nutrition-profile-weight_kg input').fill('65');
+  await page.locator('.nutrition-profile-sex').getByRole('button').first().click();
+  await page.locator('.nutrition-save-profile').click();
+  await expect(page.locator('.nutrition-success')).toContainText('营养档案已保存');
+}
+async function manualMeal(page: Page) {
+  await page.locator('.nutrition-add').click();
+  await page.locator('.nutrition-food-name input').fill('家常午餐');
+  await page.locator('.nutrition-food-grams input').fill('400');
+  await page.locator('.nutrition-food-carbs_g input').fill('50');
+  await page.locator('.nutrition-food-protein_g input').fill('30');
+  await page.locator('.nutrition-food-fat_g input').fill('10');
+  await page.locator('.nutrition-meal-save').click();
+  await expect(page.locator('.nutrition-meal-dialog')).toHaveCount(0);
+  await expect(page.locator('.nutrition-intake .nutrition-metric-number')).toHaveText('410');
+}
+for (const width of [375, 768, 1440]) test(`Nutrition CRUD, trends and bilingual layout at ${width}px`, async ({ page }) => {
+  await enter(page, width);
+  await expect(page.locator('.nutrition-balance')).toContainText('未记录饮食');
+  await profile(page);
+  await manualMeal(page);
+  await page.locator('.nutrition-edit-meal').click();
+  await page.locator('.nutrition-food-carbs_g input').fill('60');
+  await page.locator('.nutrition-meal-save').click();
+  await expect(page.locator('.nutrition-intake .nutrition-metric-number')).toHaveText('450');
+  await page.locator('.nutrition-tabs').getByRole('button').nth(1).click();
+  await expect(page.locator('.nutrition-chart-column')).toHaveCount(7);
+  await page.locator('.nutrition-period-day').click();
+  await expect(page.locator('.nutrition-chart-column')).toHaveCount(4);
+  await expect(page.locator('.nutrition-chart-total')).toContainText('450');
+  await page.locator('.nutrition-period-month').click();
+  const days = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+  await expect(page.locator('.nutrition-chart-column')).toHaveCount(days);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.screenshot({ path: `docs/screenshots/nutrition-${width}-zh.png`, fullPage: true });
+  await page.getByRole('button', { name: 'EN', exact: true }).click();
+  await expect(page.locator('.nutrition-title')).toHaveText('Food & energy');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.screenshot({ path: `docs/screenshots/nutrition-${width}-en.png`, fullPage: true });
+  await page.getByRole('button', { name: '中文', exact: true }).click();
+  await page.locator('.nutrition-tabs').getByRole('button').first().click();
+  await page.locator('.nutrition-delete-meal').click();
+  await page.locator('.nutrition-confirm-delete').click();
+  await expect(page.locator('.nutrition-meal')).toHaveCount(0);
+  await expect(page.locator('.nutrition-balance')).toContainText('未记录饮食');
+});
+test('A photographed meal is authorized, reviewed and privately saved', async ({ page }) => {
+  await enter(page, 375);
+  await page.locator('.nutrition-add').click();
+  const chooser = page.waitForEvent('filechooser');
+  await page.locator('.nutrition-photo-album').click();
+  await (await chooser).setFiles({ name: 'synthetic-meal.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a6f8AAAAASUVORK5CYII=', 'base64') });
+  await expect(page.locator('.nutrition-photo-preview')).toBeVisible();
+  await expect(page.locator('.nutrition-recognize')).toBeDisabled();
+  await page.locator('.nutrition-meal-dialog .nutrition-toggle').click();
+  await page.locator('.nutrition-recognize').click();
+  await expect(page.locator('.nutrition-food-editor')).toHaveCount(2);
+  await expect(page.locator('.nutrition-meal-dialog')).toContainText('份量和用油为估算');
+  await expect(page.locator('.nutrition-meal')).toHaveCount(0);
+  await page.locator('.nutrition-food-name input').first().fill('校正后的米饭');
+  await page.screenshot({ path: 'docs/screenshots/nutrition-photo-review-375.png', fullPage: true });
+  await page.locator('.nutrition-meal-save').click();
+  await expect(page.locator('.nutrition-meal')).toContainText('校正后的米饭');
+  await page.getByRole('button', { name: '查看私人照片', exact: true }).click();
+  await expect(page.locator('.nutrition-private-photo')).toBeVisible();
+});
+test('A chosen meal plan creates records only after activation and meal check-in', async ({ page }) => {
+  await enter(page, 1440);
+  await profile(page);
+  await page.locator('.nutrition-tabs').getByRole('button').nth(2).click();
+  await page.locator('.nutrition-style-balanced').click();
+  await expect(page.locator('.nutrition-plan-generate')).toBeDisabled();
+  await page.locator('.nutrition-plans .nutrition-toggle').click();
+  await page.locator('.nutrition-plan-generate').click();
+  await expect(page.locator('.nutrition-plan-activate')).toBeVisible({ timeout: 15000 });
+  await expect(page.locator('.nutrition-plan-day')).toHaveCount(7);
+  await expect(page.locator('.nutrition-plan-checkin')).toHaveCount(0);
+  await expect(page.locator('.nutrition-intake .nutrition-metric-number')).toHaveText('0');
+  await page.locator('.nutrition-plan-activate').click();
+  await expect(page.locator('.nutrition-plan-checkin')).toHaveCount(21);
+  await expect(page.locator('.nutrition-plan-checkin').nth(3)).toBeDisabled();
+  await page.locator('.nutrition-plan-checkin').first().click();
+  await expect(page.locator('.nutrition-plan-checkin').first()).toContainText('此餐已打卡');
+  await page.reload();
+  await page.locator('.sidebar').getByRole('button', { name: '饮食记录', exact: true }).click();
+  await expect(page.locator('.nutrition-meal')).toHaveCount(1);
+  await page.locator('.nutrition-tabs').getByRole('button').nth(2).click();
+  await expect(page.locator('.nutrition-plan-checkin').first()).toBeDisabled();
+  await page.screenshot({ path: 'docs/screenshots/nutrition-plan-1440.png', fullPage: true });
+});

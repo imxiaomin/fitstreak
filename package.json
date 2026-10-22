@@ -1,7 +1,11 @@
 {
-  "name": "fitstreak", "version": "1.0.0", "private": true,
+  "name": "fitstreak",
+  "version": "1.0.0",
+  "private": true,
   "description": "FitStreak · 日积一练 — bilingual fitness check-in mini program",
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "dev": "npm run dev -w @fitstreak/web",
     "db:status": "tsx scripts/database-status.mts",
@@ -14,8 +18,17 @@
     "test:e2e": "playwright test",
     "test:live": "playwright test -c playwright.live.config.ts",
     "test:agent": "playwright test -c playwright.agent.config.ts",
-    "api:export": "tsx scripts/export-api.ts"
+    "api:export": "tsx scripts/export-api.ts",
+    "test:nutrition": "playwright test -c playwright.nutrition.config.ts"
   },
-  "devDependencies": {"tsx":"^4.20.0", "typescript":"~5.8.3", "@types/node":"^22.15.0", "@playwright/test":"^1.51.0", "msw":"^2.7.0"},
-  "engines": {"node": ">=22"}
+  "devDependencies": {
+    "tsx": "^4.20.0",
+    "typescript": "~5.8.3",
+    "@types/node": "^22.15.0",
+    "@playwright/test": "^1.51.0",
+    "msw": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }

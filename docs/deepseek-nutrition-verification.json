@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-22T03:24:23.224Z",
+  "provider": "DeepSeek",
+  "model": "deepseek-flash",
+  "visionModel": "deepseek-flash",
+  "syntheticData": true,
+  "storage": "isolated in-memory PGlite",
+  "vision": {
+    "input": "synthetic line icon",
+    "rejectedInventedFood": true,
+    "error": "NUTRITION_NO_FOOD"
+  },
+  "plan": {
+    "status": "draft",
+    "error": null,
+    "days": 7,
+    "activated": true,
+    "checkedIn": true
+  },
+  "actualMealAccuracyTested": false
+}

@@ -1,0 +1,20 @@
+flowchart TD
+    UI[H5 / 微信小程序 饮食页面] --> AUTH[JWT 所有者校验]
+    UI --> LOCAL[相册 / 相机 本地压缩预览]
+    LOCAL --> CONSENT[本次图片授权]
+    CONSENT --> AUTH
+    AUTH --> RECORD[餐食增改删与计划逐餐打卡]
+    AUTH --> JOB[异步任务 配额与幂等控制]
+    JOB --> VISION[DeepSeek 图片食物识别]
+    JOB --> PLAN[DeepSeek 七日饮食计划]
+    VISION --> CHECK[服务端结构与数值校验]
+    PLAN --> CHECK
+    CHECK --> REVIEW[用户查看及校正]
+    REVIEW --> RECORD
+    RECORD --> DB[(PostgreSQL / PGlite)]
+    DB --> STATS[每日汇总 自然周 / 自然月图表]
+    PROFILE[年龄 身高 体重 性别] --> BMR[Mifflin 代谢估算与每日快照]
+    TRAIN[已完成运动打卡] --> NET[MET 净运动消耗估算]
+    BMR --> STATS
+    NET --> STATS
+    STATS --> UI

@@ -5,6 +5,7 @@ import {chromium} from '@playwright/test';
 
 // FitStreak original 24px line icons. PNG exports work in WXSS without icon fonts or inline SVG.
 const icons={
+ nutrition:'<circle cx="12" cy="13" r="6"/><path d="M2 2v6m3-6v6M2 5h3M3.5 8v14M22 2v20m0-20c-3 3-3 7 0 7"/>',
  home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/>',
  plans:'<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 11h16m-12 4h2m4 0h2m-8 3h2"/>',
  stats:'<path d="M4 3v17h17M8 15v-4m5 4V6m5 9V9"/>',

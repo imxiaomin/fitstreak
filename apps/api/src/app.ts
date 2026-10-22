@@ -11,9 +11,10 @@ import {responseFor} from './contracts.js';
 import {registerAgent} from './agent/routes.js';
 import {AgentError} from './agent/schema.js';
 import type {AgentConfig} from './agent/provider.js';
+import {registerNutrition} from './nutrition/routes.js';
 
 declare module '@fastify/jwt' { interface FastifyJWT {payload:{sub:string}; user:{sub:string};} }
-export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean; requestLimit?:number; agent?:AgentConfig};
+export type AppOptions = {db?:Database; secret:string; demo?:boolean; now?:()=>Date; corsOrigin?:string; wechat?:{appid:string;secret:string}; logger?:boolean; requestLimit?:number; agent?:AgentConfig;nutrition?:AgentConfig&{visionModel?:string}};
 const uuid={type:'string',format:'uuid'};
 const date={type:'string',format:'date'};
 const object=(properties:Record<string,any>, required:string[]=[])=>({type:'object',additionalProperties:false,properties,required});
@@ -43,6 +44,7 @@ export async function buildApp(o:AppOptions) {
        code=fields.includes('start_date')?'AI_INVALID_START_DATE':fields.includes('message')?'AI_INVALID_MESSAGE':fields.includes('consent')?'AI_CONSENT_REQUIRED':'AI_INVALID_REQUEST';
      }
    }
+   if(req.routeOptions.url==='/api/nutrition/analyses'&&(status===413||err.validation?.some((v:any)=>v.instancePath==='/image_data'&&v.keyword==='maxLength'))){status=413;code='NUTRITION_IMAGE_TOO_LARGE';}
    if(status===401) code='UNAUTHORIZED';
    if(status===429&&!(err instanceof AgentError))code='HTTP_RATE_LIMITED';
    if(code==='23505') {status=409;code='ALREADY_CHECKED_IN';}
@@ -126,6 +128,7 @@ export async function buildApp(o:AppOptions) {
    const row=(await db.query('SELECT a.id,a.category,a.reading_minutes,t.title,t.summary,t.body FROM article a JOIN article_translation t ON t.article_id=a.id WHERE a.id=$1 AND t.locale=$2',[(req.params as any).id,(req.query as any).locale??'zh-CN'])).rows[0];if(!row) fail('NOT_FOUND',404);return result(row);
  });
  const agent=await registerAgent(app,db,auth,today,o.agent);
- app.addHook('onClose',async()=>{await agent.close();await db.close();});
+ const nutrition=await registerNutrition(app,db,auth,today,o.nutrition??o.agent);
+ app.addHook('onClose',async()=>{await nutrition.close();await agent.close();await db.close();});
  await app.ready();return app;
 }

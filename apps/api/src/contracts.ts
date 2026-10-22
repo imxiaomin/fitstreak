@@ -1,4 +1,5 @@
 // Response contracts are used by Fastify serialization and generated OpenAPI.
+import {nutritionResponseFor} from './nutrition/contracts.js';
 import {healthSchema,proposalSchema,exerciseSchema} from './agent/schema.js';
 const text={type:'string'},number={type:'integer'},id={type:'string',format:'uuid'},date={type:'string',format:'date'};
 const entity=(properties:Record<string,any>)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});
@@ -14,6 +15,7 @@ const ErrorResponse=entity({error:entity({code:text,requestId:text})});
 const AgentRun=entity({id,status:text,message:text,locale:text,start_date:date,model:text,answer:text,candidate_text:text,validation_issues:list(entity({zh:text,en:text})),proposal:{anyOf:[proposalSchema,{type:'null'}]},error_code:{anyOf:[text,{type:'null'}]},tool_log:list(entity({tool:text,status:text})),total_tokens:number,created_plan_ids:list(id),created_at:text,updated_at:text});
 const Health={...healthSchema,properties:{...healthSchema.properties,version:id,updated_at:text},required:[...healthSchema.required,'version','updated_at']};
 export function responseFor(url:string,method:string){
+ const nutrition=nutritionResponseFor(url,method);if(nutrition)return nutrition;
  let data:any,status=200;
  if(url==='/health')data=entity({status:text});
  else if(url.startsWith('/api/auth/')){data=entity({token:text,user:User,demo:{type:'boolean'}});if(url.endsWith('/demo'))status=201;}
